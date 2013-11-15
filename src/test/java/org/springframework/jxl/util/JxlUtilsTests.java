@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Tests for {@link JxlUtils}.
  * 
@@ -65,7 +67,16 @@ public class JxlUtilsTests {
         Assert.assertTrue("Workbook should have sheets.", JxlUtils.hasSheets(this.workbook));
         Mockito.when(this.workbook.getNumberOfSheets()).thenReturn(0);
         Assert.assertFalse("Workbook shouldn't have sheets.", JxlUtils.hasSheets(this.workbook));
+    }
 
+    /**
+     * Test the {@link JxlUtils#extractContents(jxl.Cell[])} method.
+     */
+    @Test
+    public void extractContentWithEmptyCell() {
+        Cell[] row = {cell1, cell2, cell3, cell4};
+        String[] values = JxlUtils.extractContents(row);
+        assertEquals("Input and Output row should be equal", row.length, values.length);
     }
 
 }

@@ -82,9 +82,7 @@ public final class JxlUtils {
     public static String[] extractContents(final Cell[] row) {
         final List<String> values = new ArrayList<String>();
         for (final Cell cell : row) {
-            if (!isEmpty(cell)) {
-                values.add(cell.getColumn(), cell.getContents());
-            }
+            values.add(cell.getColumn(), isEmpty(cell) ? null : cell.getContents());
         }
         return values.toArray(new String[values.size()]);
     }

@@ -11,11 +11,11 @@
     <parent>
         <groupId>org.springframework.batch</groupId>
         <artifactId>spring-batch-parent</artifactId>
-        <version>2.2.0.RELEASE</version>
+        <version>2.2.2.RELEASE</version>
     </parent>
 
     <properties>
-        <spring.batch.version>2.2.0.RELEASE</spring.batch.version>
+        <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
         <jxl.version>2.6.12</jxl.version>
         <poi.version>3.9</poi.version>
     </properties>
