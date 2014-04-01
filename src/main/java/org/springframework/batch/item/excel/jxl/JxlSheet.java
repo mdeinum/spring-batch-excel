@@ -42,6 +42,7 @@ public class JxlSheet implements Sheet {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getNumberOfRows() {
         return this.delegate.getRows();
     }
@@ -49,6 +50,7 @@ public class JxlSheet implements Sheet {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getHeader() {
         return this.getRow(0);
     }
@@ -56,6 +58,7 @@ public class JxlSheet implements Sheet {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getRow(final int rowNumber) {
         final Cell[] row = this.delegate.getRow(rowNumber);
         return JxlUtils.extractContents(row);
@@ -64,6 +67,7 @@ public class JxlSheet implements Sheet {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getName() {
         return this.delegate.getName();
     }
@@ -71,6 +75,7 @@ public class JxlSheet implements Sheet {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getNumberOfColumns() {
         return this.delegate.getColumns();
     }
