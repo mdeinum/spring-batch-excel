@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link JxlUtils}.
- * 
+ *
  * @author Marten Deinum
  *
  */
@@ -38,10 +38,10 @@ public class JxlUtilsTests {
      */
     @Test
     public void checkIfCellsAreEmpty() {
-        Assert.assertFalse("Cell1 should not be empty", JxlUtils.isEmpty(this.cell1));
-        Assert.assertTrue("Cell2 should be empty", JxlUtils.isEmpty(this.cell2));
-        Assert.assertTrue("Cell3 should be empty", JxlUtils.isEmpty(this.cell3));
-        Assert.assertTrue("Cell4 should be empty", JxlUtils.isEmpty(this.cell4));
+        Assert.assertFalse("Cell[1] should not be empty", JxlUtils.isEmpty(this.cell1));
+        Assert.assertTrue("Cell[2] should be empty", JxlUtils.isEmpty(this.cell2));
+        Assert.assertTrue("Cell[3] should be empty", JxlUtils.isEmpty(this.cell3));
+        Assert.assertTrue("Cell[4] should be empty", JxlUtils.isEmpty(this.cell4));
         Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty((Cell) null));
     }
 
@@ -52,9 +52,9 @@ public class JxlUtilsTests {
     public void checkIfRowIsEmpty() {
         Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty((Cell[]) null));
         Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty(new Cell[0]));
-        Assert.assertFalse("Cell[]1 should not be empty",
-                JxlUtils.isEmpty(new Cell[] { this.cell1, this.cell2, this.cell3 }));
-        Assert.assertTrue("Cell[]2 should be empty", JxlUtils.isEmpty(new Cell[] { this.cell2, this.cell3, null }));
+        Assert.assertFalse("Cell[1] should not be empty",
+                JxlUtils.isEmpty(new Cell[]{this.cell1, this.cell2, this.cell3}));
+        Assert.assertTrue("Cell[2] should be empty", JxlUtils.isEmpty(new Cell[]{this.cell2, this.cell3, null}));
     }
 
     /**
