@@ -16,17 +16,19 @@
 
 package org.springframework.batch.item.excel.poi;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.batch.item.excel.Sheet;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Sheet implementation for Apache POI.
  * 
  * @author Marten Deinum
+ * @since 0.5.0
  */
 public class PoiSheet implements Sheet {
 
@@ -77,6 +79,10 @@ public class PoiSheet implements Sheet {
                 case STRING:
                 case BLANK:
                     cells.add(cell.getStringCellValue());
+                    break;
+                case FORMULA:
+                    FormulaEvaluator evaluator = delegate.getWorkbook().getCreationHelper().createFormulaEvaluator();
+                    cells.add(evaluator.evaluate(cell).formatAsString());
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
