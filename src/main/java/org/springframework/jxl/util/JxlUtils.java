@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package org.springframework.jxl.util;
 
 import jxl.Cell;
 import jxl.Workbook;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.List;
  * Class containing utility methods to work with JXL.
  *
  * @author Marten Deinum
- *
+ * @since 0.5.0
  */
 public final class JxlUtils {
 
@@ -41,7 +42,7 @@ public final class JxlUtils {
      *
      * @param cell to check
      * @return true/false
-     * @see StringUtils#hasText(String)
+     * @see org.springframework.util.StringUtils#hasText(String)
      */
     public static boolean isEmpty(final Cell cell) {
         return cell == null || !StringUtils.hasText(cell.getContents());
@@ -55,7 +56,7 @@ public final class JxlUtils {
      * @return true/false
      */
     public static boolean isEmpty(final Cell[] row) {
-        if (row == null || row.length == 0) {
+        if (ObjectUtils.isEmpty(row)) {
             return true;
         }
         for (final Cell cell : row) {
@@ -84,8 +85,14 @@ public final class JxlUtils {
      */
     public static String[] extractContents(final Cell[] row) {
         final List<String> values = new ArrayList<>();
-        for (final Cell cell : row) {
-            values.add(cell.getColumn(), isEmpty(cell) ? null : cell.getContents());
+        if (!ObjectUtils.isEmpty(row)) {
+            for (final Cell cell : row) {
+                if (!isEmpty(cell)) {
+                    values.add(cell.getColumn(), cell.getContents());
+                } else {
+                    values.add(cell.getColumn(), "");
+                }
+            }
         }
         return values.toArray(new String[0]);
     }

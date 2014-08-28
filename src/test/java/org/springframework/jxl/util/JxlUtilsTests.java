@@ -79,4 +79,9 @@ public class JxlUtilsTests {
         assertEquals("Input and Output row should be equal", row.length, values.length);
     }
 
+    @Test
+    public void extractingContent() {
+        Assert.assertTrue("[null] should give empty array", JxlUtils.extractContents(null).length == 0);
+    }
+
 }
