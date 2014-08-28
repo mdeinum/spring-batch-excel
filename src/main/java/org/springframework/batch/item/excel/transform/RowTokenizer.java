@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,12 @@ import org.springframework.batch.item.excel.Sheet;
 import org.springframework.batch.item.file.transform.FieldSet;
 
 /**
- * Interface that is used by framework to convert a Cell[] into a {@link FieldSet}.
+ * Interface that is used by framework to convert a row, represented in a String[], into a
+ * {@link org.springframework.batch.item.file.transform.FieldSet}.
  * 
  * @author Marten Deinum 
+ * @since 0.5.0
  */
-
 public interface RowTokenizer {
 
     FieldSet tokenize(Sheet sheet, String[] row);
