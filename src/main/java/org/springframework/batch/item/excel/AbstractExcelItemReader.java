@@ -30,9 +30,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * {@link ItemReader} implementation which uses the JExcelApi to read an Excel
- * file. It will read the file sheet for sheet and row for row. It is based on
- * the {@link org.springframework.batch.item.file.FlatFileItemReader}
+ * Reads lines from an input Microsoft Excel file.
+ * 
+ * <p>It will read the file sheet for sheet and row for row.
+ * It is based on the {@link org.springframework.batch.item.support.AbstractItemCountingItemStreamItemReader}
  *
  * @param <T> the type
  * @author Marten Deinum
