@@ -21,7 +21,7 @@ import org.springframework.batch.item.excel.support.rowset.RowSet;
 /**
  * Map rows from an excel sheet to an object.
  *
- * @param <T>
+ * @param <T> the type
  * @author Marten Deinum
  * @since 0.5.0
  */

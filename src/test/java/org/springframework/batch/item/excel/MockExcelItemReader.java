@@ -40,5 +40,6 @@ public class MockExcelItemReader<T> extends AbstractExcelItemReader<T> {
 
     @Override
     protected void doClose() throws Exception {
+        sheets.clear();
     }
 }
