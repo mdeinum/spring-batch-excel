@@ -28,6 +28,9 @@ import org.springframework.batch.item.excel.Sheet;
 public class JxlSheet implements Sheet {
 
     private final jxl.Sheet delegate;
+    private final int numberOfRows;
+    private final int numberOfColumns;
+    private final String name;
 
     /**
      * Constructor which takes the delegate sheet.
@@ -37,6 +40,9 @@ public class JxlSheet implements Sheet {
     JxlSheet(final jxl.Sheet delegate) {
         super();
         this.delegate = delegate;
+        this.numberOfRows = this.delegate.getRows();
+        this.numberOfColumns = this.delegate.getNumberOfImages();
+        this.name=this.delegate.getName();
     }
 
     /**
@@ -44,7 +50,7 @@ public class JxlSheet implements Sheet {
      */
     @Override
     public int getNumberOfRows() {
-        return this.delegate.getRows();
+        return this.numberOfRows;
     }
 
     /**
@@ -65,7 +71,7 @@ public class JxlSheet implements Sheet {
      */
     @Override
     public String getName() {
-        return this.delegate.getName();
+        return this.name;
     }
 
     /**
@@ -73,7 +79,7 @@ public class JxlSheet implements Sheet {
      */
     @Override
     public int getNumberOfColumns() {
-        return this.delegate.getColumns();
+        return this.numberOfColumns;
     }
 
 }
