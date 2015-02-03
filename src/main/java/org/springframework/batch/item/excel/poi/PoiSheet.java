@@ -1,5 +1,5 @@
 /*
- * Copyright 20062019 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ public class PoiSheet implements Sheet {
     private final String name;
 
     private int numberOfColumns = -1;
+    private FormulaEvaluator evaluator;
 
     /**
      * Constructor which takes the delegate sheet.
@@ -91,14 +92,20 @@ public class PoiSheet implements Sheet {
                     cells.add(cell.getStringCellValue());
                     break;
                 case FORMULA:
-                    FormulaEvaluator evaluator = delegate.getWorkbook().getCreationHelper().createFormulaEvaluator();
-                    cells.add(evaluator.evaluate(cell).formatAsString());
+                    cells.add(getFormulaEvaluator().evaluate(cell).formatAsString());
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
             }
         }
         return cells.toArray(new String[0]);
+    }
+
+    private FormulaEvaluator getFormulaEvaluator() {
+        if (this.evaluator == null) {
+            this.evaluator = delegate.getWorkbook().getCreationHelper().createFormulaEvaluator();
+        }
+        return this.evaluator;
     }
 
     /**
