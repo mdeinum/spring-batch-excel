@@ -53,6 +53,7 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     @Override
     protected void doClose() throws Exception {
+        super.doClose();
         if (workbook != null) {
             this.workbook.close();
         }
