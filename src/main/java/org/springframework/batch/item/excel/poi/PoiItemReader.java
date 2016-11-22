@@ -24,7 +24,6 @@ import org.springframework.batch.item.excel.Sheet;
 import org.springframework.core.io.Resource;
 
 import java.io.InputStream;
-import java.io.PushbackInputStream;
 
 /**
  * {@link org.springframework.batch.item.ItemReader} implementation which uses apache POI
@@ -76,9 +75,7 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void openExcelFile(final Resource resource) throws Exception {
         workbookStream = resource.getInputStream();
-        if (!workbookStream.markSupported() && !(workbookStream instanceof PushbackInputStream)) {
-            throw new IllegalStateException("InputStream MUST either support mark/reset, or be wrapped as a PushbackInputStream");
-        }
+
         this.workbook = WorkbookFactory.create(workbookStream);
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
