@@ -34,6 +34,7 @@ import java.util.List;
  * @since 0.5.0
  */
 public class PoiSheet implements Sheet {
+    private static final String CELL_ERROR = "#NA";
 
     private final org.apache.poi.ss.usermodel.Sheet delegate;
     private final int numberOfRows;
@@ -108,6 +109,9 @@ public class PoiSheet implements Sheet {
                 case STRING:
                 case BLANK:
                     cells.add(cell.getStringCellValue());
+                    break;
+                case ERROR:
+                    cells.add(CELL_ERROR);
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
