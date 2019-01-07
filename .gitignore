@@ -1,6 +1,6 @@
-*.class
+# Maven #
+target/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Intellij #
+*.iml
+.idea/
