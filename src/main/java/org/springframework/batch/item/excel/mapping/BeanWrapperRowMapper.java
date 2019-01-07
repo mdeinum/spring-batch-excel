@@ -71,7 +71,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
 
     private BeanFactory beanFactory;
 
-    private ConcurrentMap<DistanceHolder, ConcurrentMap<String, String>> propertiesMatched = new ConcurrentHashMap<DistanceHolder, ConcurrentMap<String, String>>();
+    private final ConcurrentMap<DistanceHolder, ConcurrentMap<String, String>> propertiesMatched = new ConcurrentHashMap<>();
 
     private int distanceLimit = 5;
 
@@ -206,9 +206,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
         }
         try {
             return type.newInstance();
-        } catch (InstantiationException e) {
-            ReflectionUtils.handleReflectionException(e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             ReflectionUtils.handleReflectionException(e);
         }
         // should not happen
@@ -227,9 +225,9 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
         // Map from field names to property names
         DistanceHolder distanceKey = new DistanceHolder(cls, distanceLimit);
         if (!propertiesMatched.containsKey(distanceKey)) {
-            propertiesMatched.putIfAbsent(distanceKey, new ConcurrentHashMap<String, String>());
+            propertiesMatched.putIfAbsent(distanceKey, new ConcurrentHashMap<>());
         }
-        Map<String, String> matches = new HashMap<String, String>(propertiesMatched.get(distanceKey));
+        Map<String, String> matches = new HashMap<>(propertiesMatched.get(distanceKey));
 
         @SuppressWarnings({"unchecked", "rawtypes"})
         Set<String> keys = new HashSet(properties.keySet());
@@ -258,7 +256,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
             }
         }
 
-        propertiesMatched.replace(distanceKey, new ConcurrentHashMap<String, String>(matches));
+        propertiesMatched.replace(distanceKey, new ConcurrentHashMap<>(matches));
         return properties;
     }
 
@@ -278,7 +276,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
         // looking for a match.
         if (index > 0) {
             prefix = key.substring(0, index);
-            suffix = key.substring(index + 1, key.length());
+            suffix = key.substring(index + 1);
             String nestedName = findPropertyName(bean, prefix);
             if (nestedName == null) {
                 return null;
@@ -327,9 +325,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
             try {
                 nestedValue = wrapper.getPropertyType(nestedName).newInstance();
                 wrapper.setPropertyValue(nestedName, nestedValue);
-            } catch (InstantiationException e) {
-                ReflectionUtils.handleReflectionException(e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 ReflectionUtils.handleReflectionException(e);
             }
         }

@@ -20,20 +20,18 @@ public class BeanPropertyWithStaticHeaderItemReaderTest {
 
     private MockExcelItemReader<Player> reader;
 
-    private ExecutionContext executionContext;
-
     @Before
     public void setup() throws Exception {
-        executionContext = new ExecutionContext();
+        ExecutionContext executionContext = new ExecutionContext();
 
-        List<String[]> rows = new ArrayList<String[]>();
+        List<String[]> rows = new ArrayList<>();
         rows.add( new String[]{"AbduKa00", "Abdul-Jabbar", "Karim", "rb", "1974", "1996"});
         rows.add( new String[]{"AbduRa00", "Abdullah", "Rabih", "rb", "1975", "1999"});
         MockSheet sheet = new MockSheet("players", rows);
 
-        reader = new MockExcelItemReader<Player>(sheet);
+        reader = new MockExcelItemReader<>(sheet);
 
-        BeanWrapperRowMapper<Player> rowMapper = new BeanWrapperRowMapper<Player>();
+        BeanWrapperRowMapper<Player> rowMapper = new BeanWrapperRowMapper<>();
         rowMapper.setTargetType(Player.class);
         rowMapper.afterPropertiesSet();
 

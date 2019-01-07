@@ -59,7 +59,7 @@ final class PropertyMatches {
 
     private final String propertyName;
 
-    private String[] possibleMatches;
+    private final String[] possibleMatches;
 
 
     /**
@@ -83,7 +83,7 @@ final class PropertyMatches {
      * indicating the possible property matches.
      */
     public String buildErrorMessage() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("Bean property '");
         buf.append(this.propertyName);
         buf.append("' is not writable or has an invalid setter method. ");
@@ -118,10 +118,10 @@ final class PropertyMatches {
      * @param maxDistance the maximum distance to accept
      */
     private String[] calculateMatches(PropertyDescriptor[] propertyDescriptors, int maxDistance) {
-        List<String> candidates = new ArrayList<String>();
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            if (propertyDescriptors[i].getWriteMethod() != null) {
-                String possibleAlternative = propertyDescriptors[i].getName();
+        List<String> candidates = new ArrayList<>();
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            if (propertyDescriptor.getWriteMethod() != null) {
+                String possibleAlternative = propertyDescriptor.getName();
                 int distance = calculateStringDistance(this.propertyName, possibleAlternative);
                 if (distance <= maxDistance) {
                     candidates.add(possibleAlternative);

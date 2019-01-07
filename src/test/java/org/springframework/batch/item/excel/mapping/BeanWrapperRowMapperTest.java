@@ -30,11 +30,11 @@ public class BeanWrapperRowMapperTest {
 
     @Test
     public void givenAValidRowWhenMappingThenAValidPlayerShouldBeConstructed() throws Exception {
-        BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<Player>();
+        BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<>();
         mapper.setTargetType(Player.class);
         mapper.afterPropertiesSet();
 
-        List<String[]> rows = new ArrayList<String[]>();
+        List<String[]> rows = new ArrayList<>();
         rows.add(new String[]{"id", "lastName", "firstName", "position", "birthYear", "debutYear"});
         rows.add( new String[]{"AbduKa00", "Abdul-Jabbar", "Karim", "rb", "1974", "1996"});
         MockSheet sheet = new MockSheet("players", rows);
@@ -60,12 +60,12 @@ public class BeanWrapperRowMapperTest {
     public void givenAValidRowWhenMappingThenAValidPlayerShouldBeConstructedBasedOnPrototype() throws Exception {
 
         ApplicationContext ctx = new AnnotationConfigApplicationContext(TestConfig.class);
-        BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<Player>();
+        BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<>();
         mapper.setPrototypeBeanName("player");
         mapper.setBeanFactory(ctx);
         mapper.afterPropertiesSet();
 
-        List<String[]> rows = new ArrayList<String[]>();
+        List<String[]> rows = new ArrayList<>();
         rows.add(new String[]{"id", "lastName", "firstName", "position", "birthYear", "debutYear"});
         rows.add( new String[]{"AbduKa00", "Abdul-Jabbar", "Karim", "rb", "1974", "1996"});
         MockSheet sheet = new MockSheet("players", rows);

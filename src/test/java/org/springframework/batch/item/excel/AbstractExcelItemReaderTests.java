@@ -26,7 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
-import org.springframework.batch.item.excel.support.rowset.RowSet;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -41,8 +40,6 @@ public abstract class AbstractExcelItemReaderTests  {
 
     protected AbstractExcelItemReader<String[]> itemReader;
 
-    private ExecutionContext executionContext;
-
     @Before
     public void setup() throws Exception {
         this.itemReader = createExcelItemReader();
@@ -52,7 +49,7 @@ public abstract class AbstractExcelItemReaderTests  {
         this.itemReader.setSkippedRowsCallback(rs -> logger.info("Skipping: " + Arrays.toString(rs.getCurrentRow())));
         configureItemReader(this.itemReader);
         this.itemReader.afterPropertiesSet();
-        executionContext = new ExecutionContext();
+        ExecutionContext executionContext = new ExecutionContext();
         this.itemReader.open(executionContext);
     }
 
@@ -69,7 +66,7 @@ public abstract class AbstractExcelItemReaderTests  {
         assertEquals(3, this.itemReader.getNumberOfSheets());
         String[] row;
         do {
-            row = (String[]) this.itemReader.read();
+            row = this.itemReader.read();
             this.logger.debug("Read: " + Arrays.toString(row));
             if (row != null) {
                 assertEquals(6, row.length);
