@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2011 the original author or authors.
+ * Copyright 2007-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@ package org.springframework.batch.item.excel;
 import org.springframework.batch.item.ParseException;
 
 /**
- * Exception thrown when parsing excel files. The name of the sheet, the row number on that sheet and the
- * name of the excel file can be passed in so that in exception handling we can reuse it. This class only has 
- * simply dependencies to make it is generic as possible.
+ * Exception thrown when parsing excel files. The name of the sheet, the row number on
+ * that sheet and the name of the excel file can be passed in so that in exception
+ * handling we can reuse it. This class only has simply dependencies to make it is
+ * generic as possible.
  * 
  * @author Marten Deinum
  *

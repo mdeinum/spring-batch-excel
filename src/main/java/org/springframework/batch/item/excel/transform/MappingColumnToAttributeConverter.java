@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.springframework.batch.item.excel.transform;
+ */
+package org.springframework.batch.item.excel.transform;
 
 import org.springframework.util.ObjectUtils;
 
@@ -20,8 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** 
- * {@link ColumnToAttributeConverter} which maps the names to columns and vice versa based on the provide mapping
- * configuration. If a mapping cannot be found it returns the name as is.
+ * {@link ColumnToAttributeConverter} which maps the names to columns and vice versa
+ * based on the provide mapping configuration. If a mapping cannot be found it returns
+ * the name as is.
  * 
  * @author Marten Deinum
  */

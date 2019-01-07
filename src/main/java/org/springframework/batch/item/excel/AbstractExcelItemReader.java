@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,15 +30,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * {@link ItemReader} implementation which uses the JExcelApi to read an Excel
- * file. It will read the file sheet for sheet and row for row. It is based on
- * the {@link org.springframework.batch.item.file.FlatFileItemReader}
+ * {@link ItemReader} base implementation to read an Excel file. It will read the file
+ * sheet for sheet and row for row. It is based on the
+ * {@link org.springframework.batch.item.file.FlatFileItemReader}
  *
  * @param <T> the type
  * @author Marten Deinum
  */
-public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingItemStreamItemReader<T> implements
-        ResourceAwareItemReaderItemStream<T>, InitializingBean {
+public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingItemStreamItemReader<T>
+        implements ResourceAwareItemReaderItemStream<T>, InitializingBean {
 
     protected final Log logger = LogFactory.getLog(getClass());
     private Resource resource;

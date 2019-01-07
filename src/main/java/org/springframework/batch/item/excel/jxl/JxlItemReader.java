@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 
 /**
- * {@link ItemReader} implementation which uses the JExcelApi to read an Excel
- * file. It will read the file sheet for sheet and row for row. It is based on
- * the {@link org.springframework.batch.item.file.FlatFileItemReader}
+ * {@link ItemReader} implementation which uses the JExcelApi to read an Excel file. It
+ * will read the file sheet for sheet and row for row. It is based on the
+ * {@link org.springframework.batch.item.file.FlatFileItemReader}
  * 
  * @author Marten Deinum
  * 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2011 the original author or authors.
+ * Copyright 2007-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,9 @@ public final class JxlUtils {
     }
 
     /**
-     * Checks if the given cell is emtpy. The cell is empty if it contains no characters, it will trim spaces.
-
+     * Checks if the given cell is emtpy. The cell is empty if it contains no characters,
+     * it will trim spaces.
+     *
      * @param cell to check
      * @return true/false
      * @see StringUtils#hasText(String)
@@ -47,7 +48,9 @@ public final class JxlUtils {
     }
 
     /**
-     * Check if the given row (Cell[]) is empty. It is considered empty when the row is null, the array is empty or all the cells in the row are empty.
+     * Check if the given row (Cell[]) is empty. It is considered empty when the row is
+     * {@code null}, the array is empty or all the cells in the row are empty.
+     *
      * @param row to check
      * @return true/false
      */

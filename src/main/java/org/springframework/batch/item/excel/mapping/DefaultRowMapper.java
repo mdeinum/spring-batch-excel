@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import org.springframework.batch.item.excel.transform.DefaultRowTokenizer;
 import org.springframework.batch.item.excel.transform.RowTokenizer;
 
 /**
- * {@link RowMapper} implementation which delegates to a {@link RowTokenizer} and a {@link FieldSetMapper} the mapping
- * of fields and construction of objects.
+ * {@link RowMapper} implementation which delegates to a {@link RowTokenizer} and a
+ * {@link FieldSetMapper} the mapping of fields and construction of objects.
  *
  * @author Marten Deinum
  *
