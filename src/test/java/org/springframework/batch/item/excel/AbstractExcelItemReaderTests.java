@@ -15,6 +15,10 @@
  */
 package org.springframework.batch.item.excel;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
@@ -22,11 +26,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
+import org.springframework.batch.item.excel.support.rowset.RowSet;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.StringUtils;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Base class for testing Excel based item readers.
@@ -35,9 +37,9 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class AbstractExcelItemReaderTests  {
 
-    private final Log logger = LogFactory.getLog(this.getClass());
+    protected final Log logger = LogFactory.getLog(this.getClass());
 
-    protected AbstractExcelItemReader itemReader;
+    protected AbstractExcelItemReader<String[]> itemReader;
 
     private ExecutionContext executionContext;
 
@@ -45,14 +47,9 @@ public abstract class AbstractExcelItemReaderTests  {
     public void setup() throws Exception {
         this.itemReader = createExcelItemReader();
         this.itemReader.setLinesToSkip(1); //First line is column names
-        this.itemReader.setResource(new ClassPathResource("org/springframework/batch/item/excel/player.xls"));
+        this.itemReader.setResource(new ClassPathResource("player.xls"));
         this.itemReader.setRowMapper(new PassThroughRowMapper());
-        this.itemReader.setSkippedRowsCallback(new RowCallbackHandler() {
-
-            public void handleRow(final Sheet sheet, final String[] row) {
-                logger.info("Skipping: " + StringUtils.arrayToCommaDelimitedString(row));
-            }
-        });
+        this.itemReader.setSkippedRowsCallback(rs -> logger.info("Skipping: " + Arrays.toString(rs.getCurrentRow())));
         configureItemReader(this.itemReader);
         this.itemReader.afterPropertiesSet();
         executionContext = new ExecutionContext();
@@ -70,16 +67,16 @@ public abstract class AbstractExcelItemReaderTests  {
     @Test
     public void readExcelFile() throws Exception {
         assertEquals(3, this.itemReader.getNumberOfSheets());
-        String[] row = null;
+        String[] row;
         do {
             row = (String[]) this.itemReader.read();
-            this.logger.debug("Read: " + StringUtils.arrayToCommaDelimitedString(row));
+            this.logger.debug("Read: " + Arrays.toString(row));
             if (row != null) {
                 assertEquals(6, row.length);
             }
         } while (row != null);
         int readCount = (Integer) ReflectionTestUtils.getField(this.itemReader, "currentItemCount" );
-        assertEquals(4320, readCount); // File contains 4321 lines, first is header 4321-1=4320 records read.
+        assertEquals(4321, readCount);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -88,6 +85,6 @@ public abstract class AbstractExcelItemReaderTests  {
         reader.afterPropertiesSet();
     }
 
-    protected abstract AbstractExcelItemReader createExcelItemReader();
+    protected abstract AbstractExcelItemReader<String[]> createExcelItemReader();
 
 }

@@ -1,51 +1,12 @@
 package org.springframework.batch.item.excel.poi;
 
-import java.util.Arrays;
+import org.springframework.batch.item.excel.AbstractExcelItemReader;
+import org.springframework.batch.item.excel.AbstractExcelItemReaderTests;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.batch.item.ExecutionContext;
-import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
-import org.springframework.core.io.ClassPathResource;
+public class PoiItemReaderXlsTests extends AbstractExcelItemReaderTests {
 
-public class PoiItemReaderXlsTests {
-
-    private final Log logger = LogFactory.getLog(this.getClass());
-
-    private PoiItemReader<String[]> itemReader;
-
-    @Before
-    public void setup() throws Exception {
-        this.itemReader = new PoiItemReader<>();
-        this.itemReader.setLinesToSkip(1); //First line is column names
-        this.itemReader.setResource(new ClassPathResource("/MAP-ICONS.xls"));
-        this.itemReader.setRowMapper(new PassThroughRowMapper());
-        this.itemReader.setSkippedRowsCallback((sheet, row) -> System.out.println("Skipping: " + Arrays.toString(row)));
-        this.itemReader.afterPropertiesSet();
-        this.itemReader.open(new ExecutionContext());
+    @Override
+    protected AbstractExcelItemReader<String[]> createExcelItemReader() {
+        return new PoiItemReader<>();
     }
-
-    @After
-    public void after() throws Exception {
-        this.itemReader.close();
-    }
-
-    @Test
-    public void readExcelFile() throws Exception {
-        String[] row;
-        do {
-            row = this.itemReader.read();
-            this.logger.debug("Read: "+ Arrays.toString(row));
-        } while (row != null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testRequiredProperties() throws Exception {
-        final PoiItemReader reader = new PoiItemReader();
-        reader.afterPropertiesSet();
-    }
-
 }

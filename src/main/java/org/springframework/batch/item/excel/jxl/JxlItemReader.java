@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2019 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,18 @@ package org.springframework.batch.item.excel.jxl;
 
 import jxl.Workbook;
 import jxl.read.biff.WorkbookParser;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 
 /**
- * {@link ItemReader} implementation which uses the JExcelApi to read an Excel file. It
- * will read the file sheet for sheet and row for row. It is based on the
- * {@link org.springframework.batch.item.file.FlatFileItemReader}
+ * {@link org.springframework.batch.item.ItemReader} implementation which uses the JExcelApi to read an Excel
+ * file. It will read the file sheet for sheet and row for row. It is based on
+ * the {@link org.springframework.batch.item.file.FlatFileItemReader}
  * 
  * @author Marten Deinum
- * 
+ *
  * @param <T> the type
  */
 public class JxlItemReader<T> extends AbstractExcelItemReader<T> {

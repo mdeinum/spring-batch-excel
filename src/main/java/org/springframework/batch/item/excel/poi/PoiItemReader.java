@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2019 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.batch.item.excel.poi;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -27,9 +28,8 @@ import org.springframework.core.io.Resource;
  * to read an Excel file. It will read the file sheet for sheet and row for row. It is
  * based on the {@link org.springframework.batch.item.file.FlatFileItemReader}
  *
- * @author Marten Deinum
- *
  * @param <T> the type
+ * @author Marten Deinum
  */
 public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2019 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.jxl.util;
+package org.springframework.batch.item.excel.jxl;
 
 import jxl.Cell;
 import jxl.Workbook;
@@ -32,7 +32,9 @@ import java.util.List;
  */
 public final class JxlUtils {
 
-    /** Private constructor to prevent easy instantiation. */
+    /**
+     * Private constructor to prevent easy instantiation.
+     */
     private JxlUtils() {
     }
 
@@ -69,7 +71,7 @@ public final class JxlUtils {
 
     /**
      * Check if the given workbook has any sheets.
-     * 
+     *
      * @param workbook to check
      * @return true/false
      */
@@ -78,8 +80,8 @@ public final class JxlUtils {
     }
 
     /**
-     * Extract the content from the given row. 
-     * 
+     * Extract the content from the given row.
+     *
      * @param row the row
      * @return the content as String[]
      */

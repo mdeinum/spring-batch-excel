@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2019 the original author or authors.
+ * Copyright 20062019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * Sheet implementation for Apache POI.
- * 
+ *
  * @author Marten Deinum
  * @since 0.5.0
  */
@@ -38,7 +38,7 @@ public class PoiSheet implements Sheet {
 
     /**
      * Constructor which takes the delegate sheet.
-     * 
+     *
      * @param delegate the apache POI sheet
      */
     PoiSheet(final org.apache.poi.ss.usermodel.Sheet delegate) {
@@ -67,13 +67,13 @@ public class PoiSheet implements Sheet {
      */
     @Override
     public String[] getRow(final int rowNumber) {
-        if (rowNumber > this.delegate.getLastRowNum()) {
+        final Row row = this.delegate.getRow(rowNumber);
+        if (row == null) {
             return null;
         }
-        final Row row = this.delegate.getRow(rowNumber);
         final List<String> cells = new LinkedList<>();
 
-        for (int i =0; i< getNumberOfColumns(); i++) {
+        for (int i = 0; i < getNumberOfColumns(); i++) {
             Cell cell = row.getCell(i);
             switch (cell.getCellTypeEnum()) {
                 case NUMERIC:
@@ -95,14 +95,6 @@ public class PoiSheet implements Sheet {
             }
         }
         return cells.toArray(new String[0]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String[] getHeader() {
-        return this.getRow(0);
     }
 
     /**

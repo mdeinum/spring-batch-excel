@@ -1,4 +1,4 @@
-package org.springframework.jxl.util;
+package org.springframework.batch.item.excel.jxl;
 
 import jxl.Cell;
 import jxl.Workbook;

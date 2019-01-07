@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2019 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,23 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.springframework.batch.item.excel.mapping;
+ */
+package org.springframework.batch.item.excel.mapping;
 
 import org.springframework.batch.item.excel.RowMapper;
-import org.springframework.batch.item.excel.Sheet;
+import org.springframework.batch.item.excel.support.rowset.RowSet;
 
 /**
  * Pass through {@link RowMapper} useful for passing the orginal {@code String[]}
  * back directly rather than a mapped object.
- * 
+ *
  * @author Marten Deinum
- * 
+ *
  */
 public class PassThroughRowMapper implements RowMapper<String[]> {
 
     @Override
-    public String[] mapRow(final Sheet sheet, final String[] row, final int rowNum) throws Exception {
-        return row;
+    public String[] mapRow(final RowSet rs) throws Exception {
+        return rs.getCurrentRow();
     }
 
 }

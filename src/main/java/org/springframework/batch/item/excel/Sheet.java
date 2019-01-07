@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2006-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,48 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.batch.item.excel;
 
 /**
- * Interface to wrap different Excel implementations like JExcel, JXL or Apache POI. 
+ * Interface to wrap different Excel implementations like JExcel or Apache POI.
  * 
  * @author Marten Deinum
- *
+ * @since 0.5.0
  */
 public interface Sheet {
 
     /**
      * Get the number of rows in this sheet.
-     * 
+     *
      * @return the number of rows.
      */
     int getNumberOfRows();
 
     /**
      * Get the name of the sheet.
-     * 
+     *
      * @return the name of the sheet.
      */
     String getName();
 
     /**
      * Get the row as a String[]. Returns null if the row doesn't exist.
-     * 
+     *
      * @param rowNumber the row number to read.
      * @return a String[] or null
      */
     String[] getRow(int rowNumber);
 
     /**
-     * Gets the first row of the sheet and use it as header.
-     * 
-     * @return String[] of row 0
-     */
-    String[] getHeader();
-
-    /**
      * The number of columns in this sheet.
-     * 
+     *
      * @return number of columns
      */
     int getNumberOfColumns();
