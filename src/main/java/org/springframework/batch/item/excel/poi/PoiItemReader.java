@@ -23,7 +23,6 @@ import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
 import org.springframework.core.io.Resource;
 
-import java.io.Closeable;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 
@@ -54,9 +53,7 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     @Override
     protected void doClose() throws Exception {
-        // As of Apache POI 3.11 there is a close method on the Workbook, prior version
-        // lack this method.
-        if (workbook instanceof Closeable) {
+        if (workbook != null) {
             this.workbook.close();
         }
 
