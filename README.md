@@ -1,7 +1,3 @@
-# DEPRECATED
-
-This repository no longer contains the most recent version of the Spring Batch Excel project. The code has been improved and moved the the [Spring Batch Extensions](https://github.com/mdeinum/spring-batch-extensions) project.
-
 # spring-batch-excel
 
 Spring Batch extension which contains `ItemReader` implementations for Excel. Support for both JExcel and Apache POI is available.
