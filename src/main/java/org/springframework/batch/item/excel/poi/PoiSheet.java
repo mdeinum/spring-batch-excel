@@ -16,13 +16,12 @@
 
 package org.springframework.batch.item.excel.poi;
 
-import org.springframework.batch.item.excel.Sheet;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.springframework.batch.item.excel.Sheet;
 
 /**
  * Sheet implementation for Apache POI.
@@ -66,27 +65,25 @@ public class PoiSheet implements Sheet {
             return null;
         }
         final Row row = this.delegate.getRow(rowNumber);
-        final List<String> cells = new LinkedList<String>();
+        final List<String> cells = new LinkedList<>();
 
-        final Iterator<Cell> cellIter = row.iterator();
-        while (cellIter.hasNext()) {
-            final Cell cell = cellIter.next();
+        for (Cell cell : row) {
             switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC:
-                cells.add(String.valueOf(cell.getNumericCellValue()));
-                break;
-            case Cell.CELL_TYPE_BOOLEAN:
-                cells.add(String.valueOf(cell.getBooleanCellValue()));
-                break;
-            case Cell.CELL_TYPE_STRING:
-            case Cell.CELL_TYPE_BLANK:
-                cells.add(cell.getStringCellValue());
-                break;
-            default:
-                throw new IllegalArgumentException("Cannot handle cells of type " + cell.getCellType());
+                case Cell.CELL_TYPE_NUMERIC:
+                    cells.add(String.valueOf(cell.getNumericCellValue()));
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN:
+                    cells.add(String.valueOf(cell.getBooleanCellValue()));
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                case Cell.CELL_TYPE_BLANK:
+                    cells.add(cell.getStringCellValue());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Cannot handle cells of type " + cell.getCellType());
             }
         }
-        return cells.toArray(new String[cells.size()]);
+        return cells.toArray(new String[0]);
     }
 
     /**

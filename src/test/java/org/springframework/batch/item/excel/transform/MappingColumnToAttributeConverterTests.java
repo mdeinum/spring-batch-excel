@@ -15,7 +15,7 @@ public class MappingColumnToAttributeConverterTests {
 
     @Before
     public void setup() {
-        final Map<String, String> mappings = new HashMap<String, String>();
+        final Map<String, String> mappings = new HashMap<>();
         mappings.put("foo", "bar1");
         mappings.put("baz", "bar2");
         mappings.put("with spaces", "noSpaces");

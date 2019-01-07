@@ -80,10 +80,10 @@ public final class JxlUtils {
      * @return the content as String[]
      */
     public static String[] extractContents(final Cell[] row) {
-        final List<String> values = new ArrayList<String>();
+        final List<String> values = new ArrayList<>();
         for (final Cell cell : row) {
             values.add(cell.getColumn(), isEmpty(cell) ? null : cell.getContents());
         }
-        return values.toArray(new String[values.size()]);
+        return values.toArray(new String[0]);
     }
 }

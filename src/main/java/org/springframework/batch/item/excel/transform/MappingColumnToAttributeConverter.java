@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class MappingColumnToAttributeConverter implements ColumnToAttributeConverter {
 
-    private final Map<String, String> mapping = new HashMap<String, String>();
+    private final Map<String, String> mapping = new HashMap<>();
 
     public String toAttribute(final String column) {
         if (this.mapping.containsKey(column)) {

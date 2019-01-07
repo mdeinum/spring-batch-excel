@@ -22,14 +22,14 @@ import static org.mockito.ArgumentMatchers.nullable;
 public class DefaultRowMapperTests {
 
     @Mock
-    private FieldSetMapper fieldSetMapper;
+    private FieldSetMapper<Object> fieldSetMapper;
 
     @Mock
     private RowTokenizer rowTokenizer;
 
     @Test(expected = IllegalArgumentException.class)
     public void nullRowTokenizerShouldLeadToException() throws Exception {
-        final DefaultRowMapper mapper = new DefaultRowMapper();
+        final DefaultRowMapper<Object> mapper = new DefaultRowMapper<>();
         mapper.setRowTokenizer(null);
         mapper.setFieldSetMapper(this.fieldSetMapper);
         mapper.afterPropertiesSet();
@@ -37,7 +37,7 @@ public class DefaultRowMapperTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void nullFieldSetMapperShouldLeadToException() throws Exception {
-        final DefaultRowMapper mapper = new DefaultRowMapper();
+        final DefaultRowMapper<Object> mapper = new DefaultRowMapper<>();
         mapper.setRowTokenizer(this.rowTokenizer);
         mapper.setFieldSetMapper(null);
         mapper.afterPropertiesSet();
@@ -45,7 +45,7 @@ public class DefaultRowMapperTests {
 
     @Test
     public void foo() throws Exception {
-        final DefaultRowMapper mapper = new DefaultRowMapper();
+        final DefaultRowMapper<Object> mapper = new DefaultRowMapper<>();
         mapper.setRowTokenizer(this.rowTokenizer);
         mapper.setFieldSetMapper(this.fieldSetMapper);
         final FieldSet fs = Mockito.mock(FieldSet.class);
