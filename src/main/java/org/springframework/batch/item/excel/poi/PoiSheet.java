@@ -33,7 +33,7 @@ import java.util.List;
  * @author Marten Deinum
  * @since 0.5.0
  */
-public class PoiSheet implements Sheet {
+class PoiSheet implements Sheet {
     private static final String CELL_ERROR = "#NA";
 
     private final org.apache.poi.ss.usermodel.Sheet delegate;

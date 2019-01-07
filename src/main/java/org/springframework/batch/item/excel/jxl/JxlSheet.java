@@ -25,7 +25,7 @@ import org.springframework.batch.item.excel.Sheet;
  *
  * @author Marten Deinum
  */
-public class JxlSheet implements Sheet {
+class JxlSheet implements Sheet {
 
     private final jxl.Sheet delegate;
     private final int numberOfRows;
