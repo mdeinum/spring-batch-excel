@@ -5,13 +5,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.batch.item.excel.Sheet;
 import org.springframework.batch.item.excel.transform.RowTokenizer;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.nullable;
 
 /**
  * Tests for {@link DefaultRowMapper}.
@@ -50,10 +50,10 @@ public class DefaultRowMapperTests {
         mapper.setFieldSetMapper(this.fieldSetMapper);
         final FieldSet fs = Mockito.mock(FieldSet.class);
         final Object result = new Object();
-        Mockito.when(this.rowTokenizer.tokenize(any(Sheet.class), any(String[].class))).thenReturn(fs);
+        Mockito.when(this.rowTokenizer.tokenize(nullable(Sheet.class), nullable(String[].class))).thenReturn(fs);
         Mockito.when(this.fieldSetMapper.mapFieldSet(fs)).thenReturn(result);
         Assert.assertEquals(result, mapper.mapRow(null, null, 0));
-        Mockito.verify(this.rowTokenizer, Mockito.times(1)).tokenize(any(Sheet.class), any(String[].class));
+        Mockito.verify(this.rowTokenizer, Mockito.times(1)).tokenize(nullable(Sheet.class), nullable(String[].class));
         Mockito.verify(this.fieldSetMapper, Mockito.times(1)).mapFieldSet(fs);
     }
 
