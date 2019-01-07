@@ -15,11 +15,12 @@
  */
 package org.springframework.batch.item.excel.jxl;
 
+import java.io.InputStream;
+
 import jxl.Workbook;
 import jxl.read.biff.WorkbookParser;
 import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
-import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 
 /**
@@ -41,8 +42,8 @@ public class JxlItemReader<T> extends AbstractExcelItemReader<T> {
     }
 
     @Override
-    protected void openExcelFile(final Resource resource) throws Exception {
-        this.workbook = WorkbookParser.getWorkbook(resource.getInputStream());
+    protected void openExcelFile(final InputStream inputStream) throws Exception {
+        this.workbook = WorkbookParser.getWorkbook(inputStream);
     }
 
     @Override
@@ -51,6 +52,8 @@ public class JxlItemReader<T> extends AbstractExcelItemReader<T> {
         if (this.workbook != null) {
             this.workbook.close();
         }
+
+        this.workbook=null;
     }
 
     @Override

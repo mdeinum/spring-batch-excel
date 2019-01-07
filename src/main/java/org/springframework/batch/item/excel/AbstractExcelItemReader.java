@@ -15,6 +15,8 @@
  */
 package org.springframework.batch.item.excel;
 
+import java.io.InputStream;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ParseException;
@@ -43,6 +45,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
 
     protected final Log logger = LogFactory.getLog(getClass());
     private Resource resource;
+    private InputStream inputStream;
     private int linesToSkip = 0;
     private int currentSheet = 0;
     private int endAfterBlankLines = 1;
@@ -151,7 +154,9 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
             return;
         }
 
-        this.openExcelFile(this.resource);
+        this.inputStream = this.resource.getInputStream();
+
+        this.openExcelFile(this.inputStream);
         this.openSheet();
         this.noInput = false;
         if (logger.isDebugEnabled()) {
@@ -180,6 +185,10 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     protected void doClose() throws Exception {
         this.currentSheet=0;
         this.rs=null;
+        if (this.inputStream != null) {
+            this.inputStream.close();
+        }
+        this.inputStream=null;
     }
 
         /**
@@ -224,7 +233,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
      * @param resource {@code Resource} pointing to the Excel file to read
      * @throws Exception when the Excel sheet cannot be accessed
      */
-    protected abstract void openExcelFile(Resource resource) throws Exception;
+    protected abstract void openExcelFile(InputStream resource) throws Exception;
 
     /**
      * In strict mode the reader will throw an exception on

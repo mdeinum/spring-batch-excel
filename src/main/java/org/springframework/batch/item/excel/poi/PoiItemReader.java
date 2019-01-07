@@ -21,7 +21,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
-import org.springframework.core.io.Resource;
 
 import java.io.InputStream;
 
@@ -38,8 +37,6 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     private Workbook workbook;
 
-    private InputStream workbookStream;
-
     @Override
     protected Sheet getSheet(final int sheet) {
         return new PoiSheet(this.workbook.getSheetAt(sheet));
@@ -53,15 +50,11 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void doClose() throws Exception {
         super.doClose();
-        if (workbook != null) {
+        if (this.workbook != null) {
             this.workbook.close();
         }
 
-        if (workbookStream != null) {
-            workbookStream.close();
-        }
         this.workbook=null;
-        this.workbookStream=null;
     }
 
     /**
@@ -69,14 +62,13 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
      * it can be closed cleanly on the end of reading the file. This to be able to release the resources used by
      * Apache POI.
      *
-     * @param resource the {@code Resource} pointing to the Excel file.
+     * @param inputStream the {@code InputStream} pointing to the Excel file.
      * @throws Exception is thrown for any errors.
      */
     @Override
-    protected void openExcelFile(final Resource resource) throws Exception {
-        workbookStream = resource.getInputStream();
+    protected void openExcelFile(final InputStream inputStream) throws Exception {
 
-        this.workbook = WorkbookFactory.create(workbookStream);
+        this.workbook = WorkbookFactory.create(inputStream);
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
 
