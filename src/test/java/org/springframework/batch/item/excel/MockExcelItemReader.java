@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by in329dei on 17-9-2014.
+ * @author Marten Deinum
  */
 public class MockExcelItemReader<T> extends AbstractExcelItemReader<T> {
 
@@ -36,5 +36,9 @@ public class MockExcelItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void openExcelFile(Resource resource) throws Exception {
 
+    }
+
+    @Override
+    protected void doClose() throws Exception {
     }
 }
