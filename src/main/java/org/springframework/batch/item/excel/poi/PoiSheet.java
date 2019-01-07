@@ -17,6 +17,7 @@
 package org.springframework.batch.item.excel.poi;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -82,7 +83,17 @@ public class PoiSheet implements Sheet {
 
         for (int i = 0; i < numberOfColumns; i++) {
             Cell cell = row.getCell(i);
-            switch (cell.getCellTypeEnum()) {
+            CellType cellType = cell.getCellTypeEnum();
+            if (cellType == CellType.FORMULA) {
+                FormulaEvaluator evaluator = getFormulaEvaluator();
+                if (evaluator == null) {
+                    cells.add(cell.getCellFormula());
+                } else {
+                    cellType = evaluator.evaluateFormulaCellEnum(cell);
+                }
+            }
+
+            switch (cellType) {
                 case NUMERIC:
                     if (DateUtil.isCellDateFormatted(cell)) {
                         Date date = cell.getDateCellValue();
@@ -97,9 +108,6 @@ public class PoiSheet implements Sheet {
                 case STRING:
                 case BLANK:
                     cells.add(cell.getStringCellValue());
-                    break;
-                case FORMULA:
-                    cells.add(getFormulaEvaluator().evaluate(cell).formatAsString());
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
