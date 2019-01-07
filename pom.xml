@@ -15,6 +15,10 @@
     </parent>
 
     <properties>
+        <!-- Java Version -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
         <spring.batch.version>2.2.2.RELEASE</spring.batch.version>
         <jxl.version>2.6.12</jxl.version>
         <poi.version>3.17</poi.version>
@@ -65,5 +69,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- CircleCI build workaround -->
+                    <reuseForks>true</reuseForks>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+                <version>2.22.1</version><!--$NO-MVN-MAN-VER$-->
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
