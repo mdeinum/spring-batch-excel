@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 the original author or authors.
+ * Copyright 2011-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,19 +68,19 @@ public class PoiSheet implements Sheet {
         final List<String> cells = new LinkedList<>();
 
         for (Cell cell : row) {
-            switch (cell.getCellType()) {
-                case Cell.CELL_TYPE_NUMERIC:
+            switch (cell.getCellTypeEnum()) {
+                case NUMERIC:
                     cells.add(String.valueOf(cell.getNumericCellValue()));
                     break;
-                case Cell.CELL_TYPE_BOOLEAN:
+                case BOOLEAN:
                     cells.add(String.valueOf(cell.getBooleanCellValue()));
                     break;
-                case Cell.CELL_TYPE_STRING:
-                case Cell.CELL_TYPE_BLANK:
+                case STRING:
+                case BLANK:
                     cells.add(cell.getStringCellValue());
                     break;
                 default:
-                    throw new IllegalArgumentException("Cannot handle cells of type " + cell.getCellType());
+                    throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
             }
         }
         return cells.toArray(new String[0]);
