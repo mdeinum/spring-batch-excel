@@ -48,7 +48,7 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void openExcelFile(final Resource resource) throws Exception {
         this.workbook = WorkbookFactory.create(resource.getInputStream());
-        this.workbook.setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
+        this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
 
 }
