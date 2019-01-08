@@ -15,6 +15,8 @@
  */
 package org.springframework.batch.item.excel.support.rowset;
 
+import java.util.Arrays;
+
 import org.springframework.batch.item.excel.Sheet;
 
 /**
@@ -35,9 +37,6 @@ public class StaticColumnNameExtractor implements ColumnNameExtractor {
 
     @Override
     public String[] getColumnNames(Sheet sheet) {
-        String[] names = new String[columnNames.length];
-        System.arraycopy(this.columnNames, 0, names, 0, columnNames.length);
-        return names;
+        return Arrays.copyOf(this.columnNames, this.columnNames.length);
     }
-
 }
