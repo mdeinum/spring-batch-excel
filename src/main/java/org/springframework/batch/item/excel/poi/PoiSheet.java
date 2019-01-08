@@ -19,6 +19,7 @@ package org.springframework.batch.item.excel.poi;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FormulaError;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.batch.item.excel.Sheet;
@@ -34,7 +35,6 @@ import java.util.List;
  * @since 0.5.0
  */
 class PoiSheet implements Sheet {
-    private static final String CELL_ERROR = "#NA";
 
     private final org.apache.poi.ss.usermodel.Sheet delegate;
     private final int numberOfRows;
@@ -111,7 +111,7 @@ class PoiSheet implements Sheet {
                     cells.add(cell.getStringCellValue());
                     break;
                 case ERROR:
-                    cells.add(CELL_ERROR);
+                    cells.add(FormulaError.forInt(cell.getErrorCellValue()).getString());
                     break;
                 default:
                     throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
