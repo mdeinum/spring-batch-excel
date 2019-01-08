@@ -39,10 +39,10 @@ public interface Sheet {
     String getName();
 
     /**
-     * Get the row as a String[]. Returns null if the row doesn't exist.
+     * Get the row as a {@code String[]}. Returns {@code null} if the row doesn't exist.
      *
      * @param rowNumber the row number to read.
-     * @return a String[] or null
+     * @return a {@code String[]} or {@code null}
      */
     String[] getRow(int rowNumber);
 

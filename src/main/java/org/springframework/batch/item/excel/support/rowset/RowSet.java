@@ -37,7 +37,7 @@ public interface RowSet {
     /**
      * Move to the next row in the document.
      *
-     * @return true if the row is valid, false if there are no more rows
+     * @return {@code true} if the row is valid, {@code false} if there are no more rows
      */
     boolean next();
 
@@ -49,23 +49,23 @@ public interface RowSet {
     int getCurrentRowIndex();
 
     /**
-     * Return the current row as a String[].
+     * Return the current row as a {@code String[]}.
      *
-     * @return the row as a String[]
+     * @return the row as a {@code String[]}
      */
     String[] getCurrentRow();
 
     /**
-     * Retrieves the value of the indicated column in the current row as a String object.
+     * Retrieves the value of the indicated column in the current row as a {@code String}.
      *
      * @param idx the column index, 0 based
-     * @return a String objeect respresenting the column value.
+     * @return a {@code String} respresenting the column value.
      */
     String getColumnValue(int idx);
 
 
     /**
-     * Construct name-value pairs from the column names and string values. Null
+     * Construct name-value pairs from the column names and string values. {@code null}
      * values are omitted.
      *
      * @return some properties representing the row set.

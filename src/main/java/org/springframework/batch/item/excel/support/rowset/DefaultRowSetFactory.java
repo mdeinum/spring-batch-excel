@@ -18,9 +18,10 @@ package org.springframework.batch.item.excel.support.rowset;
 import org.springframework.batch.item.excel.Sheet;
 
 /**
- * {@code RowSetFactory} implementation which constructs a {@code DefaultRowSet} instance and
- * {@code DefaultRowSetMetaData} instance. The latter will have the {@code ColumnNameExtractor} configured
- * on this factory set (default {@code RowNumberColumnNameExtractor}.
+ * {@code RowSetFactory} implementation which constructs a {@code DefaultRowSet} instance
+ * and {@code DefaultRowSetMetaData} instance. The latter will have the
+ * {@code ColumnNameExtractor} configured on this factory set (default
+ * {@code RowNumberColumnNameExtractor}).
  *
  * @author Marten Deinum
  * @since 0.5.0

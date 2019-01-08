@@ -29,7 +29,7 @@ public interface RowSetFactory {
      * Create a rowset instance.
      *
      * @param sheet an Excel sheet.
-     * @return a RowSet instance.
+     * @return a {@code RowSet} instance.
      */
     RowSet create(Sheet sheet);
 }
