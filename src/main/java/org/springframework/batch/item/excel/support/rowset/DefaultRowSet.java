@@ -68,6 +68,11 @@ public class DefaultRowSet implements RowSet {
 
     @Override
     public String getColumnValue(int idx) {
+        //Avoid ArrayIndexOutOfBounds when column index is the last and value is empty
+        if(idx > currentRow.length - 1) {
+            return null;
+        }
+
         return currentRow[idx];
     }
 
