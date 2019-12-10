@@ -15,15 +15,18 @@
  */
 package org.springframework.batch.item.excel;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
 import org.springframework.core.io.ClassPathResource;
@@ -40,7 +43,7 @@ public abstract class AbstractExcelItemReaderTests  {
 
     protected AbstractExcelItemReader<String[]> itemReader;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         this.itemReader = createExcelItemReader();
         this.itemReader.setLinesToSkip(1); //First line is column names
@@ -56,7 +59,7 @@ public abstract class AbstractExcelItemReaderTests  {
     protected void configureItemReader(AbstractExcelItemReader itemReader) {
     }
 
-    @After
+    @AfterEach
     public void after() throws Exception {
         this.itemReader.close();
     }
@@ -76,10 +79,12 @@ public abstract class AbstractExcelItemReaderTests  {
         assertEquals(4321, readCount);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testRequiredProperties() throws Exception {
-        final AbstractExcelItemReader reader = createExcelItemReader();
-        reader.afterPropertiesSet();
+        assertThrows(IllegalArgumentException.class, () -> {
+            final AbstractExcelItemReader<String[]> reader = createExcelItemReader();
+            reader.afterPropertiesSet();
+        });
     }
 
     protected abstract AbstractExcelItemReader<String[]> createExcelItemReader();

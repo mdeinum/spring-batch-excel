@@ -1,17 +1,19 @@
 package org.springframework.batch.item.excel;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.Player;
 import org.springframework.batch.item.excel.mapping.BeanWrapperRowMapper;
 import org.springframework.batch.item.excel.support.rowset.DefaultRowSetFactory;
 import org.springframework.batch.item.excel.support.rowset.StaticColumnNameExtractor;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by in329dei on 17-9-2014.
@@ -20,7 +22,7 @@ public class BeanPropertyWithStaticHeaderItemReaderTest {
 
     private MockExcelItemReader<Player> reader;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         ExecutionContext executionContext = new ExecutionContext();
 

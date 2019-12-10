@@ -1,14 +1,14 @@
 package org.springframework.batch.item.excel.poi;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.FormulaError;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
 import org.springframework.core.io.ClassPathResource;
@@ -23,7 +23,7 @@ public class PoiItemReaderWithErrorsTest {
 
 	private PoiItemReader<String[]> itemReader;
 
-	@Before
+	@BeforeEach
 	public void setup() throws Exception {
 		this.itemReader = new PoiItemReader<>();
 		this.itemReader.setResource(new ClassPathResource("errors.xlsx"));

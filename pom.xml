@@ -36,6 +36,7 @@
         <spring.batch.version>4.0.1.RELEASE</spring.batch.version>
         <jxl.version>2.6.12</jxl.version>
         <poi.version>4.1.1</poi.version>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
     </properties>
 
     <dependencies>
@@ -70,9 +71,9 @@
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -1,16 +1,17 @@
 package org.springframework.batch.item.excel.support.rowset;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.batch.item.excel.Sheet;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.batch.item.excel.Sheet;
 
 /**
  * Tests for {@link DefaultRowSetMetaData}
@@ -18,21 +19,19 @@ import static org.mockito.Mockito.*;
  * @author Marten Deinum
  * @since 0.5.0
  */
-@RunWith(MockitoJUnitRunner.class)
 public class DefaultRowSetMetaDataTest {
 
     private static final String[] COLUMNS = {"col1", "col2", "col3"};
 
     private DefaultRowSetMetaData rowSetMetaData;
 
-    @Mock
     private Sheet sheet;
-
-    @Mock
     private ColumnNameExtractor columnNameExtractor;
 
-    @Before
+    @BeforeEach
     public void setup() {
+        sheet = Mockito.mock(Sheet.class);
+        columnNameExtractor = Mockito.mock(ColumnNameExtractor.class);
         rowSetMetaData = new DefaultRowSetMetaData(sheet, columnNameExtractor);
     }
 
@@ -42,7 +41,8 @@ public class DefaultRowSetMetaDataTest {
         when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
         int numColumns = rowSetMetaData.getColumnCount();
 
-        assertThat(numColumns, is(COLUMNS.length));
+        assertEquals(COLUMNS.length, numColumns);
+
     }
 
     @Test
@@ -52,8 +52,9 @@ public class DefaultRowSetMetaDataTest {
 
         String[] names = rowSetMetaData.getColumnNames();
 
-        assertThat(names.length, is(3));
-        assertThat(names, arrayContaining("col1", "col2", "col3"));
+        assertEquals(3, names.length);
+        assertArrayEquals(new String[] {"col1", "col2", "col3"}, names);
+
         verify(columnNameExtractor, times(1)).getColumnNames(sheet);
         verifyNoMoreInteractions(sheet, columnNameExtractor);
     }
@@ -65,7 +66,7 @@ public class DefaultRowSetMetaDataTest {
 
         String name = rowSetMetaData.getSheetName();
 
-        assertThat(name, is("testing123"));
+        assertEquals("testing123", name);
         verify(sheet, times(1)).getName();
         verifyNoMoreInteractions(sheet);
     }
@@ -75,18 +76,19 @@ public class DefaultRowSetMetaDataTest {
 
         when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
 
-        assertThat(rowSetMetaData.getColumnName(0), is("col1"));
-        assertThat(rowSetMetaData.getColumnName(1), is("col2"));
-        assertThat(rowSetMetaData.getColumnName(2), is("col3"));
+        assertEquals("col1", rowSetMetaData.getColumnName(0));
+        assertEquals("col2", rowSetMetaData.getColumnName(1));
+        assertEquals("col3", rowSetMetaData.getColumnName(2));
 
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void shouldThrowArrayIndexOutOfBoundsExceptionWhenIdxIsTooLarge() {
 
-        when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
-
-        rowSetMetaData.getColumnName(900);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
+            rowSetMetaData.getColumnName(900);
+        });
     }
 
 }

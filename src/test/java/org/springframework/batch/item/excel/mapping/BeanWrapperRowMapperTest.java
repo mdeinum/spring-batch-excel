@@ -1,6 +1,14 @@
 package org.springframework.batch.item.excel.mapping;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.Player;
 import org.springframework.batch.item.excel.MockSheet;
 import org.springframework.batch.item.excel.support.rowset.DefaultRowSetFactory;
@@ -11,21 +19,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 /**
  * @author Marten Deinum
  * @since 0.5.0
  */
 public class BeanWrapperRowMapperTest {
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void givenNoNameWhenInitCompleteThenIllegalStateShouldOccur() throws Exception {
-        BeanWrapperRowMapper mapper = new BeanWrapperRowMapper();
-        mapper.afterPropertiesSet();
+        assertThrows(IllegalStateException.class, () -> {
+            BeanWrapperRowMapper mapper = new BeanWrapperRowMapper();
+            mapper.afterPropertiesSet();
+        });
     }
 
     @Test
@@ -53,7 +58,6 @@ public class BeanWrapperRowMapperTest {
         assertEquals(1974, p.getBirthYear());
         assertEquals(1996, p.getDebutYear());
         assertNull(p.getComment());
-
     }
 
     @Test

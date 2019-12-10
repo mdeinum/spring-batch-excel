@@ -15,12 +15,11 @@
  */
 package org.springframework.batch.item.excel.support.rowset;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Marten Deinum
@@ -35,7 +34,7 @@ public class StaticColumnNameExtractorTest {
 
         StaticColumnNameExtractor columnNameExtractor = new StaticColumnNameExtractor(COLUMNS);
         String[] names = columnNameExtractor.getColumnNames(null);
-        assertThat(names, arrayContaining("col1", "col2", "col3", "foo", "bar"));
+        assertArrayEquals(new String[] {"col1", "col2", "col3", "foo", "bar"}, names);
     }
 
     @Test
@@ -44,8 +43,8 @@ public class StaticColumnNameExtractorTest {
         StaticColumnNameExtractor columnNameExtractor = new StaticColumnNameExtractor(COLUMNS);
         String[] names = columnNameExtractor.getColumnNames(null);
 
-        assertThat(names, arrayContaining("col1", "col2", "col3", "foo", "bar"));
-        assertThat(names, not(sameInstance(COLUMNS)));
+        assertArrayEquals(new String[] {"col1", "col2", "col3", "foo", "bar"}, names);
+        assertNotSame(COLUMNS, names);
     }
 
 }

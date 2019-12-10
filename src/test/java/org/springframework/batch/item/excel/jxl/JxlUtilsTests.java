@@ -3,12 +3,14 @@ package org.springframework.batch.item.excel.jxl;
 import jxl.Cell;
 import jxl.Workbook;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for {@link JxlUtils}.
@@ -25,7 +27,7 @@ public class JxlUtilsTests {
 
     private final Workbook workbook = Mockito.mock(Workbook.class);
 
-    @Before
+    @BeforeEach
     public void setup() {
         Mockito.when(this.cell1.getContents()).thenReturn("foo");
         Mockito.when(this.cell2.getContents()).thenReturn(" ");
@@ -38,11 +40,11 @@ public class JxlUtilsTests {
      */
     @Test
     public void checkIfCellsAreEmpty() {
-        Assert.assertFalse("Cell[1] should not be empty", JxlUtils.isEmpty(this.cell1));
-        Assert.assertTrue("Cell[2] should be empty", JxlUtils.isEmpty(this.cell2));
-        Assert.assertTrue("Cell[3] should be empty", JxlUtils.isEmpty(this.cell3));
-        Assert.assertTrue("Cell[4] should be empty", JxlUtils.isEmpty(this.cell4));
-        Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty((Cell) null));
+        assertFalse(JxlUtils.isEmpty(this.cell1), "Cell[1] should not be empty");
+        assertTrue(JxlUtils.isEmpty(this.cell2), "Cell[2] should be empty");
+        assertTrue(JxlUtils.isEmpty(this.cell3), "Cell[3] should be empty");
+        assertTrue(JxlUtils.isEmpty(this.cell4), "Cell[4] should be empty");
+        assertTrue(JxlUtils.isEmpty((Cell) null), "[null] should be empty");
     }
 
     /**
@@ -50,11 +52,10 @@ public class JxlUtilsTests {
      */
     @Test
     public void checkIfRowIsEmpty() {
-        Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty((Cell[]) null));
-        Assert.assertTrue("[null] should be empty", JxlUtils.isEmpty(new Cell[0]));
-        Assert.assertFalse("Cell[1] should not be empty",
-                JxlUtils.isEmpty(new Cell[]{this.cell1, this.cell2, this.cell3}));
-        Assert.assertTrue("Cell[2] should be empty", JxlUtils.isEmpty(new Cell[]{this.cell2, this.cell3, null}));
+        assertTrue(JxlUtils.isEmpty((Cell[]) null), "[null] should be empty");
+        assertTrue(JxlUtils.isEmpty(new Cell[0]), "[null] should be empty");
+        assertFalse(JxlUtils.isEmpty(new Cell[]{this.cell1, this.cell2, this.cell3}), "Cell[1] should not be empty");
+        assertTrue(JxlUtils.isEmpty(new Cell[]{this.cell2, this.cell3, null}), "Cell[2] should be empty");
     }
 
     /**
@@ -62,11 +63,13 @@ public class JxlUtilsTests {
      */
     @Test
     public void checkIfWorkbookHasSheets() {
-        Assert.assertFalse("[null] doesn't have sheets.", JxlUtils.hasSheets(null));
+        assertFalse (JxlUtils.hasSheets(null), "[null] doesn't have sheets.");
+
         Mockito.when(this.workbook.getNumberOfSheets()).thenReturn(5);
-        Assert.assertTrue("Workbook should have sheets.", JxlUtils.hasSheets(this.workbook));
+        assertTrue(JxlUtils.hasSheets(this.workbook), "Workbook should have sheets.");
+
         Mockito.when(this.workbook.getNumberOfSheets()).thenReturn(0);
-        Assert.assertFalse("Workbook shouldn't have sheets.", JxlUtils.hasSheets(this.workbook));
+        assertFalse(JxlUtils.hasSheets(this.workbook), "Workbook shouldn't have sheets.");
     }
 
     /**
@@ -76,12 +79,12 @@ public class JxlUtilsTests {
     public void extractContentWithEmptyCell() {
         Cell[] row = {cell1, cell2, cell3, cell4};
         String[] values = JxlUtils.extractContents(row);
-        assertEquals("Input and Output row should be equal", row.length, values.length);
+        assertEquals(row.length, values.length, "Input and Output row should be equal");
     }
 
     @Test
     public void extractingContent() {
-        Assert.assertTrue("[null] should give empty array", JxlUtils.extractContents(null).length == 0);
+        assertTrue(JxlUtils.extractContents(null).length == 0, "[null] should give empty array");
     }
 
 }
