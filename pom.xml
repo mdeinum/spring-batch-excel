@@ -35,7 +35,7 @@
 
         <spring.batch.version>4.0.1.RELEASE</spring.batch.version>
         <jxl.version>2.6.12</jxl.version>
-        <poi.version>3.17</poi.version>
+        <poi.version>4.1.1</poi.version>
     </properties>
 
     <dependencies>
