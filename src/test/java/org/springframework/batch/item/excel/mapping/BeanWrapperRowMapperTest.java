@@ -64,10 +64,7 @@ public class BeanWrapperRowMapperTest {
     public void givenAValidRowWhenMappingThenAValidPlayerShouldBeConstructedBasedOnPrototype() throws Exception {
 
         ApplicationContext ctx = new AnnotationConfigApplicationContext(TestConfig.class);
-        BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<>();
-        mapper.setPrototypeBeanName("player");
-        mapper.setBeanFactory(ctx);
-        mapper.afterPropertiesSet();
+        BeanWrapperRowMapper<Player> mapper = ctx.getBean("playerRowMapper", BeanWrapperRowMapper.class);
 
         List<String[]> rows = new ArrayList<>();
         rows.add(new String[]{"id", "lastName", "firstName", "position", "birthYear", "debutYear"});
@@ -91,6 +88,13 @@ public class BeanWrapperRowMapperTest {
 
     @Configuration
     public static class TestConfig {
+
+        @Bean
+        public BeanWrapperRowMapper<Player> playerRowMapper() {
+            BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<>();
+            mapper.setPrototypeBeanName("player");
+            return mapper;
+        }
 
         @Bean
         @Scope(value = "prototype")
