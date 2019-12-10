@@ -1,6 +1,7 @@
 # spring-batch-excel
 
 [![CircleCI](https://circleci.com/gh/mdeinum/spring-batch-excel.svg?style=svg)](https://circleci.com/gh/mdeinum/spring-batch-excel)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c52a51f788a543a9964cb8a148cfcd92)](https://www.codacy.com/manual/mdeinum/spring-batch-excel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mdeinum/spring-batch-excel&amp;utm_campaign=Badge_Grade)
 
 Spring Batch extension which contains `ItemReader` implementations for Excel. Support for both [JExcel][1] and [Apache POI][2] is available. Simple xls documents can be read with both implementations, however for reading the newer xlsx format [Apache POI][2] is required.
 
