@@ -10,9 +10,9 @@ import org.apache.poi.ss.usermodel.FormulaError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ReflectionTestUtils;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Marten Deinum

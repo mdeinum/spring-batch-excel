@@ -22,15 +22,13 @@ import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ReflectionTestUtils;
 import org.springframework.batch.item.excel.mapping.PassThroughRowMapper;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * Base class for testing Excel based item readers.
