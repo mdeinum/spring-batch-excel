@@ -13,7 +13,7 @@ Configuration of can be done in XML or using Java Config.
 
 #### XML
 
-    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader">
+    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader" scope="step">
         <property name="resource" value="classpath:/path/to/your/excel/file" />
         <property name="rowMapper">
             <bean class="org.springframework.batch.item.excel.mapping.PassThroughRowMapper" />
@@ -23,6 +23,7 @@ Configuration of can be done in XML or using Java Config.
 #### Java Config
 
     @Bean
+    @StepScope
     public PoiItemReader excelReader() {
         PoiItemReader reader = new PoiItemReader();
         reader.setResource(new ClassPathResource("/path/to/your/excel/file"));
@@ -63,7 +64,7 @@ Transforms the read row from excel into a `String[]`.
 ### BeanWrapperRowMapper
 Uses a `BeanWrapper` to convert a given row into an object. Uses the column names of the given `RowSet` to map column to properties of the `targetType` or prototype bean.
 
-    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader">
+    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader" scope="step">
         <property name="resource" value="classpath:/path/to/your/excel/file" />
         <property name="rowMapper">
             <bean class="org.springframework.batch.item.excel.mapping.BeanWrapperRowMapper">
