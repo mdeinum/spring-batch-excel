@@ -3,22 +3,18 @@
 [![CircleCI](https://circleci.com/gh/mdeinum/spring-batch-excel.svg?style=svg)](https://circleci.com/gh/mdeinum/spring-batch-excel)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c52a51f788a543a9964cb8a148cfcd92)](https://www.codacy.com/manual/mdeinum/spring-batch-excel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mdeinum/spring-batch-excel&amp;utm_campaign=Badge_Grade)
 
-Spring Batch extension which contains `ItemReader` implementations for Excel. Support for both [JExcel][1] and [Apache POI][2] is available. Simple xls documents can be read with both implementations, however for reading the newer xlsx format [Apache POI][2] is required.
+Spring Batch extension which contains an `ItemReader` implementation for Excel based on [Apache POI][1]. 
 
 ## Configuration
 
-Next to the [configuration of Spring Batch](http://docs.spring.io/spring-batch/reference/html/configureJob.html) one needs to configure the `ItemReader` for the desired framework.
-There are 2 `ItemReaders` one can configure:
+Next to the [configuration of Spring Batch](http://docs.spring.io/spring-batch/reference/html/configureJob.html) one needs to configure the `PoiItemReader`.
 
-- `org.springframework.batch.item.excel.jxl.JxlItemReader`
-- `org.springframework.batch.item.excel.poi.PoiItemReader`
-
-Configuration of both readers is the same.
+Configuration of can be done in XML or using Java Config.
 
 #### XML
 
     <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader">
-        <property name="resource" value="/path/to/your/excel/file" />
+        <property name="resource" value="classpath:/path/to/your/excel/file" />
         <property name="rowMapper">
             <bean class="org.springframework.batch.item.excel.mapping.PassThroughRowMapper" />
         </property>
@@ -39,7 +35,7 @@ Configuration of both readers is the same.
         return new PassThroughRowMapper();
     }
 
-Each reader takes a `resource` and a `rowMapper`. The `resource` is the location of the excel file to read and the `rowMapper` transforms the rows in excel to an object which you can use in the rest of the process.
+The reader takes a `resource` and a `rowMapper`. The `resource` is the location of the excel file to read and the `rowMapper` transforms the rows in excel to an object which you can use in the rest of the process.
 
 Optionally one can also set the `skippedRowsCallback`, `linesToSkip`, `strict` and `rowSetFactory` properties.
 
@@ -68,13 +64,12 @@ Transforms the read row from excel into a `String[]`.
 Uses a `BeanWrapper` to convert a given row into an object. Uses the column names of the given `RowSet` to map column to properties of the `targetType` or prototype bean.
 
     <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader">
-        <property name="resource" value="/path/to/your/excel/file" />
+        <property name="resource" value="classpath:/path/to/your/excel/file" />
         <property name="rowMapper">
-            <bean class="org.springframework.batch.item.excel.mapping.BeanWrapperowMapper">
+            <bean class="org.springframework.batch.item.excel.mapping.BeanWrapperRowMapper">
                 <property name="targetType" value="com.your.package.Player" />
             <bean>
         </property>
     </bean>
 
-[1]: http://jexcelapi.sourceforge.net
-[2]: http://poi.apache.org
+[1]: http://poi.apache.org
