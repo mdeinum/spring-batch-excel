@@ -19,8 +19,8 @@ import java.io.InputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.excel.support.rowset.DefaultRowSetFactory;
 import org.springframework.batch.item.excel.support.rowset.RowSet;
 import org.springframework.batch.item.excel.support.rowset.RowSetFactory;
@@ -62,7 +62,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     }
     
     @Override
-	public T read() throws Exception, UnexpectedInputException, ParseException {
+	public T read() throws Exception {
         	T item = super.read();
         	int blankLines = 0;
         	while (item == null) {
@@ -132,7 +132,13 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
 		return true;
 	}
 
-    @Override
+	@Override
+	public void open(ExecutionContext executionContext) throws ItemStreamException {
+		this.currentSheet=0;
+		super.open(executionContext);
+	}
+
+	@Override
     protected void doOpen() throws Exception {
         Assert.notNull(this.resource, "Input resource must be set");
         this.noInput = true;
