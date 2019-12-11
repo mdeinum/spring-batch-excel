@@ -16,18 +16,20 @@
 
 package org.springframework.batch.item.excel.poi;
 
+import java.io.InputStream;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
 
-import java.io.InputStream;
-
 /**
  * {@link org.springframework.batch.item.ItemReader} implementation which uses apache POI
  * to read an Excel file. It will read the file sheet for sheet and row for row. It is
  * based on the {@link org.springframework.batch.item.file.FlatFileItemReader}
+ *
+ * This class is <b>not</b> thread-safe.
  *
  * @param <T> the type
  * @author Marten Deinum

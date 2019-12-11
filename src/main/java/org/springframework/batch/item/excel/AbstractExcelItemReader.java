@@ -43,7 +43,7 @@ import org.springframework.util.ClassUtils;
 public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingItemStreamItemReader<T>
         implements ResourceAwareItemReaderItemStream<T>, InitializingBean {
 
-    protected final Log logger = LogFactory.getLog(getClass());
+	protected final Log logger = LogFactory.getLog(getClass());
     private Resource resource;
     private InputStream inputStream;
     private int linesToSkip = 0;
@@ -84,42 +84,52 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
      */
     @Override
     protected T doRead() throws Exception {
-        if (this.noInput || this.rs == null) {
+        if (this.noInput) {
             return null;
         }
 
-        if (rs.next()) {
-			// skip all the blank row from which content has been deleted but still a valid row
-			while (null != rs.getCurrentRow() && isInvalidValidRow(rs)) {
-				rs.next();
-			}
-			try {
-                return this.rowMapper.mapRow(rs);
-            } catch (final Exception e) {
-                throw new ExcelFileParseException("Exception parsing Excel file.", e, this.resource.getDescription(),
-                        rs.getMetaData().getSheetName(), rs.getCurrentRowIndex(), rs.getCurrentRow());
-            }
-        } else {
-            this.currentSheet++;
-            if (this.currentSheet >= this.getNumberOfSheets()) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("No more sheets in '" + this.resource.getDescription() + "'.");
-                }
-                return null;
-            } else {
-                this.openSheet();
-                return this.doRead();
-            }
+        if (this.rs == null || !rs.next()) {
+	        if (this.currentSheet >= this.getNumberOfSheets()) {
+		        if (logger.isDebugEnabled()) {
+			        logger.debug("No more sheets in '" + this.resource.getDescription() + "'.");
+		        }
+		        return null;
+	        } else {
+	        	this.openSheet();
+	        	rs.next();
+	        	currentSheet++;
+	        }
+        }
+
+		// skip all the blank row from which content has been deleted but still a valid row
+		while (null != rs.getCurrentRow() && isInvalidValidRow(rs)) {
+			rs.next();
+		}
+		try {
+            return rs.getCurrentRow() == null ? null : this.rowMapper.mapRow(rs);
+        } catch (Exception e) {
+            throw new ExcelFileParseException("Exception parsing Excel file.", e, this.resource.getDescription(),
+                    rs.getMetaData().getSheetName(), rs.getCurrentRowIndex(), rs.getCurrentRow());
         }
     }
-    
-    /**
-	 * On restart this will increment rowSet to where job left off previously
+
+	/**
+	 * On restart this will increment rowSet to where job left off previously.
+	 *
+	 * Temporarily switch out the configured {@code RowMapper} so we can use the
+	 * {@code #doRead} method and reuse the logic in there, but without actually
+	 * map to instances (this to save memory and have better performance).
 	 */
 	@Override
 	protected void jumpToItem(final int itemIndex) throws Exception {
-		for (int i = 0; i < itemIndex; i++) {
-			rs.next();
+		RowMapper<T> current = this.rowMapper;
+		this.rowMapper = (rs) -> null;
+		try {
+			for (int i = 0; i < itemIndex; i++) {
+				doRead();
+			}
+		} finally {
+			this.rowMapper = current;
 		}
 	}
 
@@ -163,7 +173,6 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
         this.inputStream = this.resource.getInputStream();
 
         this.openExcelFile(this.inputStream);
-        this.openSheet();
         this.noInput = false;
         if (logger.isDebugEnabled()) {
             logger.debug("Opened workbook [" + this.resource.getFilename() + "] with " + this.getNumberOfSheets() + " sheets.");
