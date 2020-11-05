@@ -38,6 +38,7 @@ import org.springframework.batch.item.excel.Sheet;
 public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     private Workbook workbook;
+    private InputStream inputStream;
 
     @Override
     protected Sheet getSheet(final int sheet) {
@@ -60,16 +61,13 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     }
 
     /**
-     * Open the underlying file using the {@code WorkbookFactory}. We keep track of the used {@code InputStream} so that
-     * it can be closed cleanly on the end of reading the file. This to be able to release the resources used by
-     * Apache POI.
+     * Open the underlying file using the {@code WorkbookFactory}.
      *
      * @param inputStream the {@code InputStream} pointing to the Excel file.
      * @throws Exception is thrown for any errors.
      */
     @Override
     protected void openExcelFile(final InputStream inputStream) throws Exception {
-
         this.workbook = WorkbookFactory.create(inputStream);
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
