@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2014 the original author or authors.
+ * Copyright 2006-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.springframework.batch.item.excel.support.rowset;
 
 import org.springframework.batch.item.excel.Sheet;
 
+import java.util.Iterator;
 import java.util.Properties;
 
 /**
@@ -29,14 +30,14 @@ import java.util.Properties;
  */
 public class DefaultRowSet implements RowSet {
 
-    private final Sheet sheet;
+    private final Iterator<String[]> sheetData;
     private final RowSetMetaData metaData;
 
     private int currentRowIndex = -1;
     private String[] currentRow;
 
     DefaultRowSet(Sheet sheet, RowSetMetaData metaData) {
-        this.sheet = sheet;
+        this.sheetData = sheet.iterator();
         this.metaData = metaData;
     }
 
@@ -49,10 +50,10 @@ public class DefaultRowSet implements RowSet {
     public boolean next() {
         currentRow = null;
         currentRowIndex++;
-        if (currentRowIndex < sheet.getNumberOfRows()) {
-            currentRow = sheet.getRow(currentRowIndex);
+        if (sheetData.hasNext()) {
+            currentRow = sheetData.next();
             return true;
-        }
+		}
         return false;
     }
 
@@ -66,16 +67,7 @@ public class DefaultRowSet implements RowSet {
         return this.currentRow;
     }
 
-    @Override
-    public String getColumnValue(int idx) {
-        if(idx > currentRow.length - 1) {
-            return null;
-        }
-
-        return currentRow[idx];
-    }
-
-    @Override
+	@Override
     public Properties getProperties() {
         final String[] names = metaData.getColumnNames();
         if (names == null) {

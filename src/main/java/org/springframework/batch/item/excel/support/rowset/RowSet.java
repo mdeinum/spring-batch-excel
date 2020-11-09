@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2014 the original author or authors.
+ * Copyright 2006-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,16 +55,8 @@ public interface RowSet {
      */
     String[] getCurrentRow();
 
-    /**
-     * Retrieves the value of the indicated column in the current row as a {@code String}.
-     *
-     * @param idx the column index, 0 based
-     * @return a {@code String} respresenting the column value.
-     */
-    String getColumnValue(int idx);
 
-
-    /**
+	/**
      * Construct name-value pairs from the column names and string values. {@code null}
      * values are omitted.
      *
