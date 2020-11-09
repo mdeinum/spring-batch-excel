@@ -31,15 +31,19 @@ public class DefaultRowSetMetaData implements RowSetMetaData {
     private final Sheet sheet;
 
     private final ColumnNameExtractor columnNameExtractor;
+	private String[] columnNames;
 
-    DefaultRowSetMetaData(Sheet sheet, ColumnNameExtractor columnNameExtractor) {
+	DefaultRowSetMetaData(Sheet sheet, ColumnNameExtractor columnNameExtractor) {
         this.sheet = sheet;
         this.columnNameExtractor = columnNameExtractor;
     }
 
     @Override
     public String[] getColumnNames() {
-        return columnNameExtractor.getColumnNames(sheet);
+    	if (this.columnNames == null) {
+    		this.columnNames = columnNameExtractor.getColumnNames(sheet);
+		}
+        return this.columnNames;
     }
 
     @Override
