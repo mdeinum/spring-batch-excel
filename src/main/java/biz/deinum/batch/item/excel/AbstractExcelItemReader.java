@@ -40,6 +40,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
         implements ResourceAwareItemReaderItemStream<T>, InitializingBean {
 
 	protected final Log logger = LogFactory.getLog(getClass());
+
     private Resource resource;
     private int linesToSkip = 0;
     private int currentSheet = 0;

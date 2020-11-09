@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2019 the original author or authors.
+ * Copyright 2006-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import java.io.InputStream;
 public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     private Workbook workbook;
-	private InputStream inputStream;
+    private InputStream inputStream;
 
 	@Override
     protected Sheet getSheet(final int sheet) {
@@ -68,10 +68,12 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     }
 
     /**
-     * Open the underlying file using the {@code WorkbookFactory}.
+     * Open the underlying file using the {@code WorkbookFactory}. Prefer {@code File} based access over an
+	 * {@code InputStream}. Using a file will use fewer resources compared to an input stream. The latter will need
+	 * to cache the whole sheet in-memory.
      *
      * @param resource the {@code Resource} pointing to the Excel file.
-     * @param password
+     * @param password the password for opening the file
 	 * @throws Exception is thrown for any errors.
      */
     @Override
@@ -84,8 +86,6 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 			this.inputStream = resource.getInputStream();
 			this.workbook = WorkbookFactory.create(this.inputStream, password);
 		}
-
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
-
 }

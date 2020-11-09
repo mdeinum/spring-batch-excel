@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
  * @author Marten Deinum
  * @since 0.5.0
  */
-public interface Sheet extends Iterable<String[]> {
+public interface Sheet extends Iterable<String[]>, AutoCloseable {
 
     /**
      * Get the number of rows in this sheet.
@@ -49,4 +49,6 @@ public interface Sheet extends Iterable<String[]> {
     @Nullable
     String[] getRow(int rowNumber);
 
+	@Override
+	default void close() throws Exception { }
 }
