@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2019 the original author or authors.
+ * Copyright 2006-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.batch.item.excel.Sheet;
 import org.springframework.lang.Nullable;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,7 +81,6 @@ class PoiSheet implements Sheet {
 		return map(row);
 	}
 
-
 	@Nullable
 	private String[] map(Row row) {
 		if (row == null) {
@@ -120,6 +118,7 @@ class PoiSheet implements Sheet {
 	public Iterator<String[]> iterator() {
 		return new Iterator<String[]>() {
 			Iterator<Row> delegateIter = delegate.iterator();
+
 			@Override
 			public boolean hasNext() {
 				return delegateIter.hasNext();
