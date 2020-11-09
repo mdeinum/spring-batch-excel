@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
  * @author Marten Deinum
  * @since 0.5.0
  */
-public interface Sheet {
+public interface Sheet extends Iterable<String[]> {
 
     /**
      * Get the number of rows in this sheet.

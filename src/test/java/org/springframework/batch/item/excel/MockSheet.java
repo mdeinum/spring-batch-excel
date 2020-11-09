@@ -1,5 +1,6 @@
 package org.springframework.batch.item.excel;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,4 +37,9 @@ public class MockSheet implements Sheet {
             return null;
         }
     }
+
+	@Override
+	public Iterator<String[]> iterator() {
+		return rows.iterator();
+	}
 }

@@ -25,6 +25,7 @@ import org.springframework.batch.item.excel.Sheet;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,23 +79,29 @@ class PoiSheet implements Sheet {
 	@Nullable
     public String[] getRow(final int rowNumber) {
         final Row row = this.delegate.getRow(rowNumber);
-        if (row == null) {
-            return null;
-        }
-        final List<String> cells = new LinkedList<>();
-        final int numberOfColumns = row.getLastCellNum();
+		return map(row);
+	}
 
-        for (int i = 0; i < numberOfColumns; i++) {
-            Cell cell = row.getCell(i);
-            CellType cellType = cell.getCellType();
-            if (cellType == CellType.FORMULA) {
+
+	@Nullable
+	private String[] map(Row row) {
+		if (row == null) {
+			return null;
+		}
+		final List<String> cells = new LinkedList<>();
+		final int numberOfColumns = row.getLastCellNum();
+
+		for (int i = 0; i < numberOfColumns; i++) {
+			Cell cell = row.getCell(i);
+			CellType cellType = cell.getCellType();
+			if (cellType == CellType.FORMULA) {
 				cells.add(dataFormatter.formatCellValue(cell, getFormulaEvaluator()));
-            } else {
+			} else {
 				cells.add(dataFormatter.formatCellValue(cell));
-            }
-        }
-        return cells.toArray(new String[0]);
-    }
+			}
+		}
+		return cells.toArray(new String[0]);
+	}
 
 	/**
 	 * Lazy getter for the {@code FormulaEvaluator}. Takes some time to create an instance, so if not necessary don't
@@ -108,4 +115,20 @@ class PoiSheet implements Sheet {
         }
         return this.evaluator;
     }
+
+	@Override
+	public Iterator<String[]> iterator() {
+		return new Iterator<String[]>() {
+			Iterator<Row> delegateIter = delegate.iterator();
+			@Override
+			public boolean hasNext() {
+				return delegateIter.hasNext();
+			}
+
+			@Override
+			public String[] next() {
+				return map(delegateIter.next());
+			}
+		};
+	}
 }
