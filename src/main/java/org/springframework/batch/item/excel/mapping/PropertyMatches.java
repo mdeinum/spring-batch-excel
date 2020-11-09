@@ -21,26 +21,12 @@ import java.util.List;
  * @author Dave Syer
  *
  * @since 1.0
- * @see #forProperty(String, Class)
+ * @see #forProperty(String, Class, int)
  */
 final class PropertyMatches {
 
-    //---------------------------------------------------------------------
-    // Static section
-    //---------------------------------------------------------------------
-
     /** Default maximum property distance: 2 */
     public static final int DEFAULT_MAX_DISTANCE = 2;
-
-
-    /**
-     * Create PropertyMatches for the given bean property.
-     * @param propertyName the name of the property to find possible matches for
-     * @param beanClass the bean class to search for matches
-     */
-    public static PropertyMatches forProperty(String propertyName, Class<?> beanClass) {
-        return forProperty(propertyName, beanClass, DEFAULT_MAX_DISTANCE);
-    }
 
     /**
      * Create PropertyMatches for the given bean property.
@@ -52,10 +38,6 @@ final class PropertyMatches {
         return new PropertyMatches(propertyName, beanClass, maxDistance);
     }
 
-
-    //---------------------------------------------------------------------
-    // Instance section
-    //---------------------------------------------------------------------
 
     private final String propertyName;
 
