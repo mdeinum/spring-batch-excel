@@ -18,11 +18,11 @@ package org.springframework.batch.item.excel.poi;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaError;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.batch.item.excel.Sheet;
+import org.springframework.lang.Nullable;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -36,6 +36,7 @@ import java.util.List;
  */
 class PoiSheet implements Sheet {
 
+	private final DataFormatter dataFormatter = new DataFormatter();
     private final org.apache.poi.ss.usermodel.Sheet delegate;
     private final int numberOfRows;
     private final String name;
@@ -74,6 +75,7 @@ class PoiSheet implements Sheet {
      * {@inheritDoc}
      */
     @Override
+	@Nullable
     public String[] getRow(final int rowNumber) {
         final Row row = this.delegate.getRow(rowNumber);
         if (row == null) {
@@ -84,43 +86,23 @@ class PoiSheet implements Sheet {
 
         for (int i = 0; i < numberOfColumns; i++) {
             Cell cell = row.getCell(i);
-            CellType cellType = cell.getCellTypeEnum();
+            CellType cellType = cell.getCellType();
             if (cellType == CellType.FORMULA) {
-                FormulaEvaluator evaluator = getFormulaEvaluator();
-                if (evaluator == null) {
-                    cells.add(cell.getCellFormula());
-                } else {
-                    cellType = evaluator.evaluateFormulaCellEnum(cell);
-                }
-            }
-
-            switch (cellType) {
-                case NUMERIC:
-                    if (DateUtil.isCellDateFormatted(cell)) {
-                        Date date = cell.getDateCellValue();
-                        cells.add(String.valueOf(date.getTime()));
-                    } else {
-                        cells.add(String.valueOf(cell.getNumericCellValue()));
-                    }
-                    break;
-                case BOOLEAN:
-                    cells.add(String.valueOf(cell.getBooleanCellValue()));
-                    break;
-                case STRING:
-                case BLANK:
-                    cells.add(cell.getStringCellValue());
-                    break;
-                case ERROR:
-                    cells.add(FormulaError.forInt(cell.getErrorCellValue()).getString());
-                    break;
-                default:
-                    throw new IllegalArgumentException("Cannot handle cells of type '" + cell.getCellTypeEnum() + "'");
+				cells.add(dataFormatter.formatCellValue(cell, getFormulaEvaluator()));
+            } else {
+				cells.add(dataFormatter.formatCellValue(cell));
             }
         }
         return cells.toArray(new String[0]);
     }
 
-    private FormulaEvaluator getFormulaEvaluator() {
+	/**
+	 * Lazy getter for the {@code FormulaEvaluator}. Takes some time to create an instance, so if not necessary don't
+	 * create it.
+	 *
+	 * @return the {@code FormulaEvaluator}
+	 */
+	private FormulaEvaluator getFormulaEvaluator() {
         if (this.evaluator == null) {
             this.evaluator = delegate.getWorkbook().getCreationHelper().createFormulaEvaluator();
         }

@@ -16,6 +16,8 @@
 
 package org.springframework.batch.item.excel;
 
+import org.springframework.lang.Nullable;
+
 /**
  * Interface to wrap different Excel implementations like JExcel or Apache POI.
  * 
@@ -44,6 +46,7 @@ public interface Sheet {
      * @param rowNumber the row number to read.
      * @return a {@code String[]} or {@code null}
      */
+    @Nullable
     String[] getRow(int rowNumber);
 
 }
