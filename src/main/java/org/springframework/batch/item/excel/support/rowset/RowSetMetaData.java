@@ -30,22 +30,7 @@ public interface RowSetMetaData {
      */
     String[] getColumnNames();
 
-    /**
-     * Retrieves the column name for the indicatd column.
-     *
-     * @param idx the index of the column, 0 based
-     * @return the column name
-     */
-    String getColumnName(int idx);
-
-    /**
-     * Retrieves the number of columns in the RowSet.
-     *
-     * @return the number of columns
-     */
-    int getColumnCount();
-
-    /**
+	/**
      * Retrieves the name of the sheet the RowSet is based on.
      *
      * @return the name of the sheet

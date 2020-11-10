@@ -46,18 +46,7 @@ public class DefaultRowSetMetaData implements RowSetMetaData {
         return this.columnNames;
     }
 
-    @Override
-    public String getColumnName(int idx) {
-        String[] names = getColumnNames();
-        return names[idx];
-    }
-
-    @Override
-    public int getColumnCount() {
-        return getColumnNames().length;
-    }
-
-    @Override
+	@Override
     public String getSheetName() {
         return sheet.getName();
     }

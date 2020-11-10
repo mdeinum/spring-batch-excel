@@ -36,16 +36,6 @@ public class DefaultRowSetMetaDataTest {
     }
 
     @Test
-    public void shouldMatchColumnCountWithNumberOfHeaders() {
-
-        when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
-        int numColumns = rowSetMetaData.getColumnCount();
-
-        assertEquals(COLUMNS.length, numColumns);
-
-    }
-
-    @Test
     public void shouldReturnColumnsFromColumnNameExtractor() {
 
         when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
@@ -70,25 +60,4 @@ public class DefaultRowSetMetaDataTest {
         verify(sheet, times(1)).getName();
         verifyNoMoreInteractions(sheet);
     }
-
-    @Test
-    public void shouldGetCorrectColumnName() {
-
-        when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
-
-        assertEquals("col1", rowSetMetaData.getColumnName(0));
-        assertEquals("col2", rowSetMetaData.getColumnName(1));
-        assertEquals("col3", rowSetMetaData.getColumnName(2));
-
-    }
-
-    @Test
-    public void shouldThrowArrayIndexOutOfBoundsExceptionWhenIdxIsTooLarge() {
-
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            when(columnNameExtractor.getColumnNames(sheet)).thenReturn(COLUMNS);
-            rowSetMetaData.getColumnName(900);
-        });
-    }
-
 }

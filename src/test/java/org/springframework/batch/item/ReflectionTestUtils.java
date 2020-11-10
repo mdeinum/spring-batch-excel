@@ -1,7 +1,6 @@
 package org.springframework.batch.item;
 
 import java.lang.reflect.Field;
-import java.util.Objects;
 
 import org.springframework.lang.Nullable;
 import org.springframework.util.ReflectionUtils;

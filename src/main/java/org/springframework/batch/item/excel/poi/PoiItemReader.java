@@ -38,9 +38,8 @@ import org.springframework.batch.item.excel.Sheet;
 public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     private Workbook workbook;
-    private InputStream inputStream;
 
-    @Override
+	@Override
     protected Sheet getSheet(final int sheet) {
         return new PoiSheet(this.workbook.getSheetAt(sheet));
     }

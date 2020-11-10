@@ -16,7 +16,6 @@
 package org.springframework.batch.item.excel.support.rowset;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;

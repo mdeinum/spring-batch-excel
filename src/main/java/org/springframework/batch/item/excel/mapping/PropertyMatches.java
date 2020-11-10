@@ -25,9 +25,6 @@ import java.util.List;
  */
 final class PropertyMatches {
 
-    /** Default maximum property distance: 2 */
-    public static final int DEFAULT_MAX_DISTANCE = 2;
-
     /**
      * Create PropertyMatches for the given bean property.
      * @param propertyName the name of the property to find possible matches for
@@ -38,11 +35,9 @@ final class PropertyMatches {
         return new PropertyMatches(propertyName, beanClass, maxDistance);
     }
 
-
     private final String propertyName;
 
     private final String[] possibleMatches;
-
 
     /**
      * Create a new PropertyMatches instance for the given property.
@@ -60,38 +55,8 @@ final class PropertyMatches {
         return possibleMatches;
     }
 
-    /**
-     * Build an error message for the given invalid property name,
-     * indicating the possible property matches.
-     */
-    public String buildErrorMessage() {
-        StringBuilder buf = new StringBuilder();
-        buf.append("Bean property '");
-        buf.append(this.propertyName);
-        buf.append("' is not writable or has an invalid setter method. ");
 
-        if (ObjectUtils.isEmpty(this.possibleMatches)) {
-            buf.append("Does the parameter type of the setter match the return type of the getter?");
-        }
-        else {
-            buf.append("Did you mean ");
-            for (int i = 0; i < this.possibleMatches.length; i++) {
-                buf.append('\'');
-                buf.append(this.possibleMatches[i]);
-                if (i < this.possibleMatches.length - 2) {
-                    buf.append("', ");
-                }
-                else if (i == this.possibleMatches.length - 2){
-                    buf.append("', or ");
-                }
-            }
-            buf.append("'?");
-        }
-        return buf.toString();
-    }
-
-
-    /**
+	/**
      * Generate possible property alternatives for the given property and
      * class. Internally uses the <code>getStringDistance</code> method, which
      * in turn uses the Levenshtein algorithm to determine the distance between

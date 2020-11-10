@@ -62,7 +62,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     }
     
     @Override
-	public T read() throws Exception, UnexpectedInputException, ParseException {
+	public T read() throws Exception {
         	T item = super.read();
         	int blankLines = 0;
         	while (item == null) {
@@ -83,7 +83,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
      * {@link #setRowMapper(RowMapper)} (might span multiple rows in file).
      */
     @Override
-    protected T doRead() throws Exception {
+    protected T doRead() {
         if (this.noInput) {
             return null;
         }
