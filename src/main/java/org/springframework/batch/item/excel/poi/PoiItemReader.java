@@ -16,6 +16,7 @@
 
 package org.springframework.batch.item.excel.poi;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -23,6 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.batch.item.excel.AbstractExcelItemReader;
 import org.springframework.batch.item.excel.Sheet;
+import org.springframework.core.io.Resource;
 
 /**
  * {@link org.springframework.batch.item.ItemReader} implementation which uses apache POI
@@ -38,6 +40,7 @@ import org.springframework.batch.item.excel.Sheet;
 public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
 
     private Workbook workbook;
+	private InputStream inputStream;
 
 	@Override
     protected Sheet getSheet(final int sheet) {
@@ -52,22 +55,34 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void doClose() throws Exception {
         super.doClose();
-        if (this.workbook != null) {
-            this.workbook.close();
-        }
+		if (this.inputStream != null) {
+			this.inputStream.close();
+			this.inputStream = null;
+		}
 
-        this.workbook=null;
+		if (this.workbook != null) {
+			this.workbook.close();
+			this.workbook=null;
+		}
     }
 
     /**
      * Open the underlying file using the {@code WorkbookFactory}.
      *
-     * @param inputStream the {@code InputStream} pointing to the Excel file.
+     * @param resource the {@code Resource} pointing to the Excel file.
      * @throws Exception is thrown for any errors.
      */
     @Override
-    protected void openExcelFile(final InputStream inputStream) throws Exception {
-        this.workbook = WorkbookFactory.create(inputStream);
+    protected void openExcelFile(final Resource resource) throws Exception {
+
+		File file = resource.getFile();
+		if (file != null) {
+			this.workbook = WorkbookFactory.create(file, null, false);
+		} else {
+			this.inputStream = resource.getInputStream();
+			this.workbook = WorkbookFactory.create(this.inputStream, null);
+		}
+
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
     }
 

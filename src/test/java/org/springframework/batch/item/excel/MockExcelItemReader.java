@@ -1,6 +1,7 @@
 package org.springframework.batch.item.excel;
 
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -34,7 +35,7 @@ public class MockExcelItemReader<T> extends AbstractExcelItemReader<T> {
     }
 
     @Override
-    protected void openExcelFile(InputStream resource) throws Exception {
+    protected void openExcelFile(Resource resource) throws Exception {
 
     }
 
