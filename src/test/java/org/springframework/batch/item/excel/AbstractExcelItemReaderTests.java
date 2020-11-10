@@ -54,7 +54,7 @@ public abstract class AbstractExcelItemReaderTests  {
         this.itemReader.open(executionContext);
     }
 
-    protected void configureItemReader(AbstractExcelItemReader itemReader) {
+    protected void configureItemReader(AbstractExcelItemReader<String[]> itemReader) {
     }
 
     @AfterEach
@@ -73,7 +73,7 @@ public abstract class AbstractExcelItemReaderTests  {
                 assertEquals(6, row.length);
             }
         } while (row != null);
-        int readCount = (Integer) ReflectionTestUtils.getField(this.itemReader, "currentItemCount" );
+        Integer readCount = (Integer) ReflectionTestUtils.getField(this.itemReader, "currentItemCount" );
         assertEquals(4321, readCount);
     }
 
