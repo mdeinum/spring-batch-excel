@@ -13,10 +13,10 @@ Configuration of can be done in XML or using Java Config.
 
 #### XML
 
-    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader" scope="step">
-        <property name="resource" value="classpath:/path/to/your/excel/file" />
+    <bean id="excelReader" class="PoiItemReader" scope="step">
+        <property name="resource" value="file:/path/to/your/excel/file" />
         <property name="rowMapper">
-            <bean class="org.springframework.batch.item.excel.mapping.PassThroughRowMapper" />
+            <bean class="PassThroughRowMapper" />
         </property>
     </bean>
 
@@ -26,7 +26,7 @@ Configuration of can be done in XML or using Java Config.
     @StepScope
     public PoiItemReader excelReader() {
         PoiItemReader reader = new PoiItemReader();
-        reader.setResource(new ClassPathResource("/path/to/your/excel/file"));
+        reader.setResource(new FileSystemResource("/path/to/your/excel/file"));
         reader.setRowMapper(rowMapper());
         return reader;
     }
@@ -41,7 +41,7 @@ The reader takes a `resource` and a `rowMapper`. The `resource` is the location 
 Optionally one can also set the `skippedRowsCallback`, `linesToSkip`, `strict` and `rowSetFactory` properties.
 
 ##### skippedRowsCallback
-When rows are skipped an optional `org.springframework.batch.item.excel.RowCallbackHandler` is called with the skipped row. This comes in handy when one needs to write the skipped rows to another file or create some logging.
+When rows are skipped an optional `RowCallbackHandler` is called with the skipped row. This comes in handy when one needs to write the skipped rows to another file or create some logging.
 
 ##### linesToSkip
 The number of lines to skip, this applies to each sheet in the Excel file, can be useful if the first couple of lines provide header information.
@@ -64,10 +64,10 @@ Transforms the read row from excel into a `String[]`.
 ### BeanWrapperRowMapper
 Uses a `BeanWrapper` to convert a given row into an object. Uses the column names of the given `RowSet` to map column to properties of the `targetType` or prototype bean.
 
-    <bean id="excelReader" class="org.springframework.batch.item.excel.poi.PoiItemReader" scope="step">
+    <bean id="excelReader" class="PoiItemReader" scope="step">
         <property name="resource" value="classpath:/path/to/your/excel/file" />
         <property name="rowMapper">
-            <bean class="org.springframework.batch.item.excel.mapping.BeanWrapperRowMapper">
+            <bean class="BeanWrapperRowMapper">
                 <property name="targetType" value="com.your.package.Player" />
             <bean>
         </property>
