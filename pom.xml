@@ -17,7 +17,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>biz.deinum.spring</groupId>
     <artifactId>spring-batch-excel</artifactId>
@@ -102,7 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -115,7 +115,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -127,5 +127,19 @@
             </plugin>
         </plugins>
     </build>
+
+	<scm>
+		<url>http://github.com/mdeinum/spring-batch-excel</url>
+		<connection>scm:git:hhttps://github.com/mdeinum/spring-batch-excel.git</connection>
+		<developerConnection>scm:git:git@github.com:mdeinum/spring-batch-excel.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>mdeinum</id>
+			<name>Marten Deinum</name>
+			<email>marten@deinum.biz</email>
+		</developer>
+	</developers>
 
 </project>
