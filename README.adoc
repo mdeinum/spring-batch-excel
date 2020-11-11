@@ -1,6 +1,5 @@
 # spring-batch-excel
 
-image::https://circleci.com/gh/mdeinum/spring-batch-excel.svg?style=svg[CircleCI]
 image::https://api.codacy.com/project/badge/Grade/c52a51f788a543a9964cb8a148cfcd92[Codacy Badge]
 
 Spring Batch extension which contains an `ItemReader` implementation for Excel based on https://poi.apache.org[Apache POI].
