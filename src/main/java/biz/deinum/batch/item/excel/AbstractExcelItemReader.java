@@ -84,15 +84,11 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
         }
 
         if (this.rs == null || !rs.next()) {
-	        if (this.currentSheet >= this.getNumberOfSheets()) {
+	        if (!nextSheet()) {
 		        if (logger.isDebugEnabled()) {
 			        logger.debug("No more sheets in '" + this.resource.getDescription() + "'.");
 		        }
 		        return null;
-	        } else {
-	        	this.openSheet();
-	        	rs.next();
-	        	currentSheet++;
 	        }
         }
 
@@ -166,22 +162,28 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
         }
     }
 
-    private void openSheet() {
-        final Sheet sheet = this.getSheet(this.currentSheet);
-        this.rs =rowSetFactory.create(sheet);
+    private boolean nextSheet() {
+		while (this.currentSheet < this.getNumberOfSheets() ) {
+			final Sheet sheet = this.getSheet(this.currentSheet);
+			this.rs =rowSetFactory.create(sheet);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Opening sheet " + sheet.getName() + ".");
+			}
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Opening sheet " + sheet.getName() + ".");
-        }
-
-        for (int i = 0; i < this.linesToSkip; i++) {
-            if (rs.next() && this.skippedRowsCallback != null) {
-                this.skippedRowsCallback.handleRow(rs);
-            }
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("Openend sheet " + sheet.getName() + ", with " + sheet.getNumberOfRows() + " rows.");
-        }
+			for (int i = 0; i < this.linesToSkip; i++) {
+				if (rs.next() && this.skippedRowsCallback != null) {
+					this.skippedRowsCallback.handleRow(rs);
+				}
+			}
+			if (logger.isDebugEnabled()) {
+				logger.debug("Openend sheet " + sheet.getName() + ", with " + sheet.getNumberOfRows() + " rows.");
+			}
+			this.currentSheet++;
+			if (rs.next()) {
+				return true;
+			}
+		}
+		return false;
     }
 
     protected void doClose() throws Exception {

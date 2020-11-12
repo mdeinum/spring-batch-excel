@@ -68,7 +68,9 @@ public abstract class AbstractExcelItemReaderTests  {
         String[] row;
         do {
             row = this.itemReader.read();
-            this.logger.debug("Read: " + Arrays.toString(row));
+            if (logger.isTraceEnabled()) {
+				this.logger.trace("Read: " + Arrays.toString(row));
+			}
             if (row != null) {
                 assertEquals(6, row.length);
             }
