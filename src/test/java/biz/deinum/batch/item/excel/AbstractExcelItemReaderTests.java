@@ -58,7 +58,7 @@ public abstract class AbstractExcelItemReaderTests  {
     }
 
     @AfterEach
-    public void after() throws Exception {
+    public void after() {
         this.itemReader.close();
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractExcelItemReaderTests  {
     }
 
     @Test
-    public void testRequiredProperties() throws Exception {
+    public void testRequiredProperties() {
         assertThrows(IllegalArgumentException.class, () -> {
             final AbstractExcelItemReader<String[]> reader = createExcelItemReader();
             reader.afterPropertiesSet();

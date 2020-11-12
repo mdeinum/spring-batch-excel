@@ -112,7 +112,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
 	 * map to instances (this to save memory and have better performance).
 	 */
 	@Override
-	protected void jumpToItem(final int itemIndex) throws Exception {
+	protected void jumpToItem(final int itemIndex) {
 		RowMapper<T> current = this.rowMapper;
 		this.rowMapper = (rs) -> null;
 		try {
