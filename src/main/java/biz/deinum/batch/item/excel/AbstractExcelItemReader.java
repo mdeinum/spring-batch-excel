@@ -50,6 +50,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     private boolean strict = true;
     private RowSetFactory rowSetFactory = new DefaultRowSetFactory();
     private RowSet rs;
+    private String password;
 
     public AbstractExcelItemReader() {
         super();
@@ -155,7 +156,7 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
             return;
         }
 
-        this.openExcelFile(this.resource);
+        this.openExcelFile(this.resource, this.password);
         this.noInput = false;
         if (logger.isDebugEnabled()) {
             logger.debug("Opened workbook [" + this.resource.getFilename() + "] with " + this.getNumberOfSheets() + " sheets.");
@@ -231,9 +232,10 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     /**
      *
      * @param resource {@code Resource} pointing to the Excel file to read
-     * @throws Exception when the Excel sheet cannot be accessed
+     * @param password
+	 * @throws Exception when the Excel sheet cannot be accessed
      */
-    protected abstract void openExcelFile(Resource resource) throws Exception;
+    protected abstract void openExcelFile(Resource resource, String password) throws Exception;
 
     /**
      * In strict mode the reader will throw an exception on
@@ -273,5 +275,14 @@ public abstract class AbstractExcelItemReader<T> extends AbstractItemCountingIte
     
     public void setEndAfterBlankLines(final int endAfterBlankLines) {
 		this.endAfterBlankLines = endAfterBlankLines;
+	}
+
+	/**
+	 * The password used to protect the file to open.
+	 *
+	 * @param password the password
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

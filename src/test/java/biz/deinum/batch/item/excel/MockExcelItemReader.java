@@ -34,7 +34,7 @@ public class MockExcelItemReader<T> extends AbstractExcelItemReader<T> {
     }
 
     @Override
-    protected void openExcelFile(Resource resource) throws Exception {
+    protected void openExcelFile(Resource resource, String password) throws Exception {
 
     }
 

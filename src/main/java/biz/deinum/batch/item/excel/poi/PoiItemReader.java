@@ -71,17 +71,18 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
      * Open the underlying file using the {@code WorkbookFactory}.
      *
      * @param resource the {@code Resource} pointing to the Excel file.
-     * @throws Exception is thrown for any errors.
+     * @param password
+	 * @throws Exception is thrown for any errors.
      */
     @Override
-    protected void openExcelFile(final Resource resource) throws Exception {
+    protected void openExcelFile(final Resource resource, String password) throws Exception {
 
     	try {
 			File file = resource.getFile();
-			this.workbook = WorkbookFactory.create(file, null, false);
+			this.workbook = WorkbookFactory.create(file, password, false);
 		} catch (FileNotFoundException e){
 			this.inputStream = resource.getInputStream();
-			this.workbook = WorkbookFactory.create(this.inputStream, null);
+			this.workbook = WorkbookFactory.create(this.inputStream, password);
 		}
 
         this.workbook.setMissingCellPolicy(Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
