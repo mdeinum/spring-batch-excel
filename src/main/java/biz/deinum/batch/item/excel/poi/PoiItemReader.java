@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
@@ -75,10 +76,10 @@ public class PoiItemReader<T> extends AbstractExcelItemReader<T> {
     @Override
     protected void openExcelFile(final Resource resource) throws Exception {
 
-		File file = resource.getFile();
-		if (file != null) {
+    	try {
+			File file = resource.getFile();
 			this.workbook = WorkbookFactory.create(file, null, false);
-		} else {
+		} catch (FileNotFoundException e){
 			this.inputStream = resource.getInputStream();
 			this.workbook = WorkbookFactory.create(this.inputStream, null);
 		}
