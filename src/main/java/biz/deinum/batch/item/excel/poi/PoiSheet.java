@@ -117,7 +117,7 @@ class PoiSheet implements Sheet {
 	@Override
 	public Iterator<String[]> iterator() {
 		return new Iterator<String[]>() {
-			Iterator<Row> delegateIter = delegate.iterator();
+			private final Iterator<Row> delegateIter = delegate.iterator();
 
 			@Override
 			public boolean hasNext() {

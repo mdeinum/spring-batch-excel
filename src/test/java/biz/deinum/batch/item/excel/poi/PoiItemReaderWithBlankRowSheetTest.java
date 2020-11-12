@@ -46,7 +46,7 @@ public class PoiItemReaderWithBlankRowSheetTest {
 				assertEquals(4, row.length);
 			}
 		} while (row != null);
-		int readCount = (Integer) ReflectionTestUtils.getField(this.itemReader, "currentItemCount");
+		Integer readCount = (Integer) ReflectionTestUtils.getField(this.itemReader, "currentItemCount");
 		assertEquals(7, readCount);
 	}
 }

@@ -392,9 +392,7 @@ public class BeanWrapperRowMapper<T> extends DefaultPropertyEditorRegistrar impl
                     return false;
             } else if (!cls.equals(other.cls))
                 return false;
-            if (distance != other.distance)
-                return false;
-            return true;
-        }
+			return distance == other.distance;
+		}
     }
 }

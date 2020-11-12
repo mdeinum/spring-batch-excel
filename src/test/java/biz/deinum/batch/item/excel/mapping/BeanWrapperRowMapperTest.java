@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BeanWrapperRowMapperTest {
 
     @Test
-    public void givenNoNameWhenInitCompleteThenIllegalStateShouldOccur() throws Exception {
+    public void givenNoNameWhenInitCompleteThenIllegalStateShouldOccur() {
         assertThrows(IllegalStateException.class, () -> {
             BeanWrapperRowMapper<Player> mapper = new BeanWrapperRowMapper<>();
             mapper.afterPropertiesSet();
