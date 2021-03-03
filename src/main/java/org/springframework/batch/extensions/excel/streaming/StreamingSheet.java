@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class StreamingSheet implements Sheet, Iterable<String[]>, Closeable {
+class StreamingSheet implements Sheet, Iterable<String[]>, Closeable {
 
 	private final Log logger = LogFactory.getLog(StreamingSheet.class);
 

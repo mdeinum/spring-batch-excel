@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * Created by in329dei on 17-9-2014.
+ * @author Marten Deinum
  */
 public class BeanPropertyWithStaticHeaderItemReaderTest {
 
