@@ -13,7 +13,7 @@ Configuration of can be done in XML or Java Config.
 ### XML
 
 ```xml
- <bean id="excelReader" class="biz.deinum.batch.item.excel.poi.PoiItemReader" scope="step">
+ <bean id="excelReader" class="PoiItemReader" scope="step">
      <property name="resource" value="file:/path/to/your/excel/file" />
      <property name="rowMapper">
          <bean class="PassThroughRowMapper" />
@@ -70,10 +70,10 @@ Transforms the read row from excel into a `String[]`.
 Uses a `BeanWrapper` to convert a given row into an object. Uses the column names of the given `RowSet` to map column to properties of the `targetType` or prototype bean.
 
 ```java
-<bean id="excelReader" class="biz.deinum.batch.item.excel.poi.PoiItemReader" scope="step">
+<bean id="excelReader" class="PoiItemReader" scope="step">
     <property name="resource" value="file:/path/to/your/excel/file" />
     <property name="rowMapper">
-        <bean class="biz.deinum.batch.item.excel.mapping.BeanWrapperRowMapper">
+        <bean class="BeanWrapperRowMapper">
             <property name="targetType" value="com.your.package.Player" />
         <bean>
     </property>
