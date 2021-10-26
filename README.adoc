@@ -1,5 +1,7 @@
 # spring-batch-excel
 
+The code for this project is now part of the https://github.com/spring-projects/spring-batch-extensions[Spring Batch Extensions] project and is thus no longer activily maintained here. Please redirect issues and likes to that repository.  
+
 image::https://api.codacy.com/project/badge/Grade/c52a51f788a543a9964cb8a148cfcd92[Codacy Badge]
 
 Spring Batch extension which contains an `ItemReader` implementation for Excel based on https://poi.apache.org[Apache POI]. It supports reading both XLS and XLSX files, for the latter there is also (experimental) streaming support.
